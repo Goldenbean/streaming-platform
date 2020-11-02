@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+  default-autowire="byName">
+
+  <bean id="streamingDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+    <property name="driverClassName" value="${jdbc.streaming.database.driver}"/>
+    <property name="jdbcUrl" value="${jdbc.streaming.database.url}"/>
+    <property name="username" value="${jdbc.streaming.database.username}"/>
+    <property name="password" value="${jdbc.streaming.database.password}"/>
+  </bean>
+
+  <bean id="streamingSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="streamingDataSource"/>
+<!--    <property name="typeAliasesPackage" value="raptor.streaming.server.domain"/>-->
+    <property name="configLocation" value="classpath:mybatis/sqlmap-config.xml"/>
+    <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"/>
+  </bean>
+
+<!--  <bean id="streamingTransactionManager"-->
+<!--    class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+<!--    <property name="dataSource" ref="streamingDataSource"/>-->
+<!--  </bean>-->
+
+<!--  <tx:annotation-driven transaction-manager="streamingTransactionManager"/>-->
+
+</beans>

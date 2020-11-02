@@ -1,1 +1,1 @@
-# streaming-platform
+# Streaming Platform

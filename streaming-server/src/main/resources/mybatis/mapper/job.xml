@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="raptor.streaming.server.boot.dao.JobDao">
+
+  <resultMap id="BaseResultMap" type="JobPO">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <result column="config" property="config" jdbcType="VARCHAR"/>
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+    <result column="gmt_modify" property="gmtModify" jdbcType="TIMESTAMP"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, config, gmt_create, gmt_modify
+  </sql>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from job
+  </select>
+
+  <select id="get" parameterType="Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from job
+    where id = #{id}
+  </select>
+
+  <delete id="delete" parameterType="Map">
+    delete from job
+    where id = #{id}
+  </delete>
+
+  <insert id="add" parameterType="JobPO" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into job (config, gmt_create, gmt_modify)
+    values (#{config,jdbcType=VARCHAR}, now(), now())
+  </insert>
+
+  <update id="update" parameterType="JobPO">
+    update job set
+    config = #{config},
+    gmt_modify = now()
+    where id = #{id}
+  </update>
+
+</mapper>
