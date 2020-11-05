@@ -1,4 +1,4 @@
-package raptor.streaming.deploy.yarn;
+package raptor.streaming.hadoop.yarn;
 
 import org.apache.flink.util.FlinkException;
 import org.apache.flink.yarn.YarnClusterDescriptor;

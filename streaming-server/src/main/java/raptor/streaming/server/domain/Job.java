@@ -1,6 +1,6 @@
 package raptor.streaming.server.domain;
 
-import raptor.streaming.deploy.yarn.DeployConfig;
+import raptor.streaming.hadoop.yarn.DeployConfig;
 
 public class Job {
 

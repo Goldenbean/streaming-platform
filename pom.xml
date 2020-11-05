@@ -17,8 +17,8 @@
   <properties>
     <flink.version>1.11-SNAPSHOT</flink.version>
     <scala.binary.version>2.12</scala.binary.version>
-    <spring-boot.version>2.1.16.RELEASE</spring-boot.version>
-    <spring-framework.version>5.1.9.RELEASE</spring-framework.version>
+    <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
+<!--    <spring-framework.version>5.1.9.RELEASE</spring-framework.version>-->
     <pagehelper.version>5.0.0</pagehelper.version>
     <guava.version>18.0</guava.version>
     <fastjson.version>1.2.70</fastjson.version>
@@ -48,13 +48,13 @@
           </exclusion>
         </exclusions>
       </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-framework-bom</artifactId>
-        <version>${spring-framework.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.springframework</groupId>-->
+<!--        <artifactId>spring-framework-bom</artifactId>-->
+<!--        <version>${spring-framework.version}</version>-->
+<!--        <type>pom</type>-->
+<!--        <scope>import</scope>-->
+<!--      </dependency>-->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>

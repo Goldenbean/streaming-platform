@@ -1,4 +1,4 @@
-package raptor.streaming.deploy.yarn;
+package raptor.streaming.hadoop.yarn;
 
 import com.google.common.base.Strings;
 import java.io.IOException;

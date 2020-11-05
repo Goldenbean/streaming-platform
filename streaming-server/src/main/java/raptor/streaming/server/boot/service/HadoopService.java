@@ -10,30 +10,28 @@ import org.apache.hadoop.yarn.api.records.ApplicationReport;
 import org.apache.hadoop.yarn.exceptions.YarnException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.FilePO;
 import raptor.streaming.hadoop.bean.YarnAppPO;
 import raptor.streaming.hadoop.bean.YarnClusterPO;
+import raptor.streaming.server.boot.comp.BootConfig;
 
 @Service
 public class HadoopService {
 
   private final static Logger logger = LoggerFactory.getLogger(HadoopService.class);
 
-  @Value("${streaming.conf}")
-  private String streamingConf;
+  @Autowired
+  private BootConfig bootConfig;
 
   private HadoopClient hadoopClient;
 
   @PostConstruct
   private void init() throws Exception {
 
-    if (Strings.isNullOrEmpty(streamingConf)) {
-      throw new RuntimeException("streaming.hadoop.conf is null or empty");
-    }
-
+    String streamingConf = bootConfig.getStreamingConf();
     String hadoopConf = streamingConf + "/hadoop";
 
     logger.info("init: hadoop conf [{}]", hadoopConf);

@@ -1,33 +1,30 @@
 package raptor.streaming.server.boot.service;
 
-import com.google.common.base.Strings;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.apache.flink.client.program.ClusterClientProvider;
 import org.apache.hadoop.yarn.api.records.ApplicationId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import raptor.streaming.deploy.yarn.ApplicationDeploy;
+import raptor.streaming.hadoop.yarn.ApplicationDeploy;
+import raptor.streaming.server.boot.comp.BootConfig;
 
 @Service
 public class DeployService {
 
   private final static Logger logger = LoggerFactory.getLogger(HadoopService.class);
 
-  @Value("${streaming.conf}")
-  private String streamingConf;
+  @Autowired
+  private BootConfig bootConfig;
 
 
   private ApplicationDeploy applicationDeploy;
 
   @PostConstruct
   public void init() {
-
-    if (Strings.isNullOrEmpty(streamingConf)) {
-      throw new RuntimeException("streaming.hadoop.conf or streaming.flink.conf is null or empty");
-    }
+    String streamingConf = bootConfig.getStreamingConf();
 
     String flinkConf = streamingConf + "/flink";
     String hadoopConf = streamingConf + "/hadoop";

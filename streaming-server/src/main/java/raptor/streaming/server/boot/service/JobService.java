@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import raptor.streaming.deploy.yarn.DeployConfig;
+import raptor.streaming.hadoop.yarn.DeployConfig;
 import raptor.streaming.server.boot.BootUtil;
 import raptor.streaming.server.boot.dao.JobDao;
 import raptor.streaming.server.boot.dao.model.JobPO;

@@ -1,4 +1,4 @@
-package raptor.streaming.deploy.yarn;
+package raptor.streaming.hadoop.yarn;
 
 import java.net.URL;
 import java.util.ArrayList;
