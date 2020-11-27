@@ -50,11 +50,9 @@ public class RestResult {
   }
 
 
-  private static final RestResult successInstance
-      = new RestResult(true, 200, "success");
+  private static final RestResult successInstance = new RestResult(true, 200, "success");
 
-  private static final RestResult failedInstance
-      = new RestResult(false, 500, "failed");
+  private static final RestResult failedInstance = new RestResult(false, 500, "failed");
 
   public static RestResult getSuccess() {
     return successInstance;

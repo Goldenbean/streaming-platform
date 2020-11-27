@@ -7,7 +7,9 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileStatus;
@@ -147,6 +149,11 @@ public class HadoopClient {
 
   public void upload(String src, String dst) throws IOException {
     fileSystem.copyFromLocalFile(false, true, new Path(src), new Path(dst));
+  }
+
+  public void upload(String dst, String... srcs) throws IOException {
+    Path[] srcArray = Arrays.stream(srcs).map(Path::new).toArray(Path[]::new);
+    fileSystem.copyFromLocalFile(false, true, srcArray, new Path(dst));
   }
 
   public void download(String src, String dst) throws IOException {

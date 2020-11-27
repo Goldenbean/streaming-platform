@@ -28,28 +28,28 @@ public class JobService {
 
   }
 
-  public Job get(long id) {
+  public Job get(String clusterName, long id) {
 
     JobPO jobPO = jobDao.get(id);
 
     if (jobPO != null) {
-      return toJob(jobPO);
+      return toJob(clusterName, jobPO);
     }
 
     return null;
   }
 
-  public List<Job> getAll() {
+  public List<Job> getAll(String clusterName) {
 
     List<JobPO> ret = jobDao.queryAll();
 
     return ret.stream()
-        .map(obj -> toJob(obj))
+        .map(obj -> toJob(clusterName, obj))
         .collect(Collectors.toList());
 
   }
 
-  public Job addOrUpdate(Job job) {
+  public Job addOrUpdate(String clusterName,Job job) {
 
     JobPO jobPO = new JobPO();
 
@@ -60,15 +60,15 @@ public class JobService {
     jobPO.setConfig(BootUtil.toJson(job));
 
     if (job.getId() > 0) {
-      if (get(job.getId()) != null) {
+      if (get(clusterName,job.getId()) != null) {
         jobPO.setId(job.getId());
         boolean ret = jobDao.update(jobPO);
-        return get(jobPO.getId());
+        return get(clusterName,jobPO.getId());
       }
     }
 
     boolean ret = jobDao.add(jobPO);
-    return get(jobPO.getId());
+    return get(clusterName,jobPO.getId());
   }
 
   public boolean remove(long id) {
@@ -80,10 +80,10 @@ public class JobService {
   }
 
 
-  private Job toJob(JobPO jobPO) {
+  private Job toJob(String clusterName, JobPO jobPO) {
     Job job = JSONObject.parseObject(jobPO.getConfig(), Job.class);
     job.setId(jobPO.getId());
-    job.setYarnStatus(hadoopService.getYarnState(job.getYarnId()));
+    job.setYarnStatus(hadoopService.getYarnState(clusterName, job.getYarnId()));
     return job;
   }
 }

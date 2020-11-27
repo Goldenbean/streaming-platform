@@ -17,16 +17,23 @@
 
   <bean id="streamingSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="streamingDataSource"/>
-<!--    <property name="typeAliasesPackage" value="raptor.streaming.server.domain"/>-->
+    <!--    <property name="typeAliasesPackage" value="raptor.streaming.server.domain"/>-->
     <property name="configLocation" value="classpath:mybatis/sqlmap-config.xml"/>
     <property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"/>
   </bean>
 
-<!--  <bean id="streamingTransactionManager"-->
-<!--    class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-<!--    <property name="dataSource" ref="streamingDataSource"/>-->
-<!--  </bean>-->
 
-<!--  <tx:annotation-driven transaction-manager="streamingTransactionManager"/>-->
+  <bean id="streamingMapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="raptor.streaming.server.boot.dao"/>
+    <property name="sqlSessionFactoryBeanName" value="streamingSqlSessionFactory"/>
+  </bean>
+
+
+  <!--  <bean id="streamingTransactionManager"-->
+  <!--    class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+  <!--    <property name="dataSource" ref="streamingDataSource"/>-->
+  <!--  </bean>-->
+
+  <!--  <tx:annotation-driven transaction-manager="streamingTransactionManager"/>-->
 
 </beans>

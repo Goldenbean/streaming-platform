@@ -39,7 +39,7 @@ public class JobActionService {
   public void update() {
     // logger.trace("deploy scheduled ~");
     // BootUtil.sleep(10);
-    internalDeploy();
+    internalDeploy("flink-1");
   }
 
 
@@ -48,9 +48,9 @@ public class JobActionService {
     queue.offer(id);
   }
 
-  public void stop(long id) throws IOException, YarnException {
+  public void stop( String clusterName,long id) throws IOException, YarnException {
     logger.info("stop [{}]", id);
-    Job job = jobService.get(id);
+    Job job = jobService.get(clusterName,id);
     if (job == null) {
       logger.info("cannot find job id [{}]", id);
       return;
@@ -58,26 +58,28 @@ public class JobActionService {
 
     String yarnId = job.getYarnId();
     if (!Strings.isNullOrEmpty(yarnId)) {
-      hadoopService.killYarnApplication(yarnId);
+      hadoopService.killYarnApplication(clusterName,yarnId);
     }
   }
 
 
-  private void internalDeploy() {
+  private void internalDeploy(String clusterName) {
     Long id = queue.poll();
     if (id == null) {
       // logger.info("queue is empty [{}]", id);
       return;
     }
 
-    Job job = jobService.get(id);
+    Job job = jobService.get(clusterName,id);
     if (job == null) {
       logger.info("cannot find job id [{}]", id);
       return;
     }
 
     if (!Strings.isNullOrEmpty(job.getYarnId())) {
-      String state = hadoopService.getYarnState(job.getYarnId());
+      //ToDo 代码需要调整，添加集群
+
+      String state = hadoopService.getYarnState(clusterName,job.getYarnId());
 
       if (!Arrays.asList("FINISHED", "FAILED", "KILLED", "").contains(state)) {
         logger.info("cannot deploy job, caused by state [{}]", state);
@@ -108,7 +110,7 @@ public class JobActionService {
       if (!Strings.isNullOrEmpty(appId)) {
         job.setYarnId(appId);
         job.setYarnStatus("");
-        jobService.addOrUpdate(job);
+        jobService.addOrUpdate(clusterName,job);
       }
     } catch (Exception ex) {
 

@@ -1,8 +1,10 @@
 package raptor.streaming.server.boot.control;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import raptor.streaming.server.boot.BootUtil;
 import raptor.streaming.server.boot.bean.DataResult;
 import raptor.streaming.server.boot.bean.RestResult;
+import raptor.streaming.server.boot.constants.Constant;
 import raptor.streaming.server.boot.service.JobService;
 import raptor.streaming.server.domain.Job;
 import org.slf4j.Logger;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/job/config")
+@RequestMapping(value = Constant.API_PREFIX_URI + "/job/config")
 public class JobConfigControl {
 
   private static final Logger logger = LoggerFactory.getLogger(JobConfigControl.class);
@@ -26,13 +28,13 @@ public class JobConfigControl {
   private JobService jobService;
 
   @GetMapping(value = "/")
-  public RestResult getAll() {
-    return new DataResult<>(jobService.getAll());
+  public RestResult getAll(String clusterName) {
+    return new DataResult<>(jobService.getAll(clusterName));
   }
 
   @GetMapping(value = "/{id}")
-  public RestResult get(@PathVariable("id") long id) {
-    return new DataResult<>(jobService.get(id));
+  public RestResult get(@RequestParam("name") String clusterName,@PathVariable("id") long id) {
+    return new DataResult<>(jobService.get(clusterName,id));
   }
 
   @DeleteMapping(value = "/{id}")
@@ -42,14 +44,14 @@ public class JobConfigControl {
   }
 
   @PostMapping(value = "/")
-  public RestResult addOrUpdate(@RequestBody Job job) {
+  public RestResult addOrUpdate(@RequestParam("name") String clusterName,@RequestBody Job job) {
 
     try {
       logger.debug("addOrUpdate [{}]", BootUtil.toJson(job));
       if (job.getDeployConfig() == null) {
         logger.info("job deploy config is null");
       }
-      Job ret = jobService.addOrUpdate(job);
+      Job ret = jobService.addOrUpdate(clusterName,job);
       return new DataResult(ret);
     } catch (Exception ex) {
       return RestResult.getFailed();

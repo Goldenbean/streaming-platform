@@ -8,7 +8,7 @@ public class DataResult<T> extends RestResult {
   private T data;
 
   public DataResult(T data) {
-    super(Boolean.TRUE, 200, null);
+    super(Boolean.TRUE, 200, "success");
     this.data = data;
   }
 

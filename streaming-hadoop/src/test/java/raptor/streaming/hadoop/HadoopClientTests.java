@@ -21,7 +21,7 @@ public class HadoopClientTests {
   private YarnClient yarnClient;
   private HadoopClient hadoopClient;
 
-  private static final String FLINK_HOME = "../../streaming-conf";
+  private static final String FLINK_HOME = "../config";
   private static final String FLINK_VERSION = "flink-1.11";
 
   @Before
@@ -67,7 +67,7 @@ public class HadoopClientTests {
   @Test
   public void testReadHDFSFile() {
     hadoopClient.readHDFSFile(
-        "/yarn/root/logs/application_1595986874344_0001/hadoop-4_42129_1596003754778",
+        "/streaming-platform/flink/engines/flink-1/system/job.sql",
         System.out);
   }
 

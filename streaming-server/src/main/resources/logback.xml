@@ -26,8 +26,30 @@
     </triggeringPolicy>
   </appender>
 
-  <root level="DEBUG">
-    <appender-ref ref="FILE"/>
+<!--  <appender name="MyBatis" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--    <file>logs/mybatis-sql.log</file>-->
+<!--    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--      &lt;!&ndash; <FileNamePattern>${LOG_HOME}/logs/mybatis-sql.log.%d{yyyy-MM-dd}</FileNamePattern>&ndash;&gt;-->
+<!--      <FileNamePattern>logs/mybatis-sql.log.%d{yyyy-MM-dd}</FileNamePattern>-->
+<!--      <maxHistory>30</maxHistory>-->
+<!--    </rollingPolicy>-->
+<!--    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+<!--      <pattern>%thread|%d{yyyy-MM-dd HH:mm:ss.SSS}|%level|%logger{36}|%m%n</pattern>-->
+<!--    </encoder>-->
+<!--  </appender>-->
+
+
+<!--  <logger name="com.ibatis" level="DEBUG" />-->
+<!--  <logger name="java.sql.ResultSet" level="DEBUG" />-->
+
+
+<!--  <logger name="mybatis.sql" level="TRACE">-->
+<!--    <appender-ref ref="MyBatis"/>-->
+<!--  </logger>-->
+
+  <root level="info">
+    <appender-ref ref="STDOUT"/>
   </root>
+
 
 </configuration>
