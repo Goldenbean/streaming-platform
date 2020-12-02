@@ -27,24 +27,24 @@
   <select id="getCluster" parameterType="Map" resultType="ClusterPO">
     select
     <include refid="Base_Column_List"/>
-    from cluster
+    from sys_cluster
     where name = #{name}
   </select>
   <select id="getAllCluster" parameterType="Map" resultMap="BaseResultMap">
     select
     id, name, type,spu_conf, description, total_nodes,total_memory,total_memory,total_cores, gmt_create, gmt_modify
-    from cluster
+    from sys_cluster
   </select>
   <select id="getAllClusterByType" parameterType="Map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from cluster
+    from sys_cluster
     <where>
       type = #{type}
     </where>
   </select>
   <insert id="addCluster" parameterType="ClusterPO">
-    insert into cluster (id, name, type, config_file,
+    insert into sys_cluster (id, name, type, config_file,
       config_file_md5, config_file_name, spu_conf, description,
       gmt_create, gmt_modify)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
@@ -53,7 +53,7 @@
     #{configFileName,jdbcType=VARCHAR}, #{spuConf,jdbcType=VARCHAR},  #{description,jdbcType=VARCHAR}, now(), now())
   </insert>
   <update id="updateCluster" parameterType="ClusterPO">
-    update cluster set
+    update sys_cluster set
       description = #{description},
       config_file = #{configFile},
       config_file_md5 = #{configFileMD5},
@@ -68,12 +68,12 @@
   </update>
 
   <update id="updateClusterConf" parameterType="Map">
-    update cluster set
+    update sys_cluster set
       cluster_conf = #{clusterConf}
      where name = #{name}
   </update>
   <delete id="deleteCluster" parameterType="Map">
-    delete from cluster
+    delete from sys_cluster
     where name = #{name}
   </delete>
 </mapper>

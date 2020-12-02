@@ -117,7 +117,7 @@ public class ClusterController {
 
       if (clusterPO.getTotalCores() == 0) {
         clusterPO.setTotalCores(yarnOverview.getCoresTotal());
-        clusterPO.setTotalMemory((double) Math.round(yarnOverview.getMemTotal()/1024*100)/100);
+        clusterPO.setTotalMemory((double) Math.round(yarnOverview.getMemTotal() / 1024 * 100) / 100);
         clusterPO.setTotalNodes(yarnOverview.getNodeList().size());
 
         clusterService.updateCluster(clusterPO);
