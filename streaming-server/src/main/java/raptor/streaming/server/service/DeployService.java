@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import raptor.streaming.hadoop.yarn.ApplicationDeploy;
-import raptor.streaming.server.config.BootConfig;
+import raptor.streaming.server.conf.BootConfig;
 @Service
 public class DeployService {
 
