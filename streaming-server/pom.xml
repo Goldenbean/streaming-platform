@@ -99,10 +99,10 @@
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis-spring</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.github.pagehelper</groupId>
-      <artifactId>pagehelper</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.github.pagehelper</groupId>-->
+<!--      <artifactId>pagehelper</artifactId>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -139,16 +139,50 @@
       <scope>test</scope>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>org.projectlombok</groupId>-->
-<!--      <artifactId>lombok</artifactId>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>3.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-generator</artifactId>
+      <version>3.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-engine-core</artifactId>
+      <version>2.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>2.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>2.7.0</version>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!--热部署-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -164,13 +198,17 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <!-- 实现热部署的设置 -->
+        <configuration>
+          <fork>true</fork>
+        </configuration>
         <executions>
           <execution>
             <goals>
               <goal>repackage</goal>
             </goals>
             <configuration>
-              <mainClass>raptor.streaming.server.boot.BootMain</mainClass>
+              <mainClass>raptor.streaming.server.BootMain</mainClass>
               <layout>ZIP</layout>
               <executable>true</executable>
             </configuration>
