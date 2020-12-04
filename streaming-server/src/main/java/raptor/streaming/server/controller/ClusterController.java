@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ import raptor.streaming.hadoop.bean.YarnClusterPO;
 import raptor.streaming.server.common.entity.CustomPage;
 import raptor.streaming.server.common.entity.DataResult;
 import raptor.streaming.server.common.entity.RestResult;
-import  raptor.streaming.server.constants.Constant;
+import raptor.streaming.server.common.constants.Constant;
 import raptor.streaming.server.entity.ClusterEntity;
 import raptor.streaming.server.service.ClusterService;
 import raptor.streaming.server.service.HadoopService;
@@ -65,12 +66,12 @@ public class ClusterController {
   @PostMapping(value = "/")
   public RestResult add(@RequestParam("name") String name,
       @RequestParam("type") int type,
-      @RequestParam(value = "description", required = false) String description,
+      @RequestParam(value = "remark", required = false) String remark,
       @RequestParam(value = "spuConf", required = false) String spuConf,
       @RequestParam(value = "configFile", required = false) MultipartFile configFile) {
 
     try {
-      return clusterService.addCluster(name, type, description, spuConf, configFile);
+      return clusterService.addCluster(name, type, remark, spuConf, configFile);
     } catch (IOException e) {
       log.error(ExceptionUtils.getFullStackTrace(e));
     }
@@ -81,12 +82,12 @@ public class ClusterController {
   @PostMapping(value = "/update")
   public RestResult update(@RequestParam("name") String name,
       @RequestParam(value = "type", required = false) int type,
-      @RequestParam(value = "description", required = false) String description,
+      @RequestParam(value = "remark", required = false) String remark,
       @RequestParam(value = "spuConf", required = false) String spuConf,
       @RequestParam(value = "configFile", required = false) MultipartFile file) {
     try {
       return clusterService
-          .updateCluster(name, type, description, spuConf, file);
+          .updateCluster(name, type, remark, spuConf, file);
     } catch (IOException e) {
       log.error(ExceptionUtils.getFullStackTrace(e));
     }
@@ -117,7 +118,7 @@ public class ClusterController {
 
   @GetMapping(value = "/{name}/basic")
   public RestResult getBasic(@PathVariable("name") String name) {
-    ClusterEntity cluster = clusterService.getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName,name));
+    ClusterEntity cluster = clusterService.getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
     if (cluster == null) {
       return new RestResult(true, 404, "集群不存在");
     }
@@ -127,7 +128,7 @@ public class ClusterController {
 
   @GetMapping(value = "/{name}/metrics")
   public RestResult getOverview(@PathVariable("name") String name) {
-    ClusterEntity cluster = clusterService.getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName,name));
+    ClusterEntity cluster = clusterService.getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
     if (cluster == null) {
       return new RestResult(true, 404, "集群不存在");
     }
@@ -144,7 +145,7 @@ public class ClusterController {
         cluster.setTotalCores(yarnOverview.getCoresTotal());
         cluster.setTotalMemory((double) Math.round(yarnOverview.getMemTotal() / 1024 * 100) / 100);
         cluster.setTotalNodes(yarnOverview.getNodeList().size());
-        clusterService.update(cluster,new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName,name));
+        clusterService.update(cluster, new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
       }
       return new DataResult<>(yarnOverview);
     } catch (Exception e) {
