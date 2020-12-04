@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.constants.Constant;
+import raptor.streaming.server.common.constants.Constant;
 import raptor.streaming.server.dao.ClusterDao;
 import raptor.streaming.server.service.HadoopService;
 import raptor.streaming.server.entity.ClusterEntity;
@@ -35,7 +35,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
 
   @Override
   public RestResult addCluster(String name, int type,
-      String description,
+      String remark,
       String spuConf, MultipartFile file) throws IOException {
 
     ClusterEntity cluster = clusterDao.selectOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
@@ -47,7 +47,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
     cluster.setName(name);
     cluster.setType(type);
     setFileToDO(file, cluster);
-    cluster.setDescription(description);
+    cluster.setRemark(remark);
     cluster.setSpuConf(spuConf);
 
     if (cluster.insert()) {
@@ -64,7 +64,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
 
   @Override
   public RestResult updateCluster(String name, int type,
-      String description,
+      String remark,
       String spuConf, MultipartFile file) throws IOException {
     ClusterEntity cluster = clusterDao.selectOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
     if (cluster == null) {
@@ -72,7 +72,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
     }
     setFileToDO(file, cluster);
     cluster.setType(type);
-    cluster.setDescription(description);
+    cluster.setRemark(remark);
     cluster.setSpuConf(spuConf);
 
     if (clusterDao.updateById(cluster)>0) {

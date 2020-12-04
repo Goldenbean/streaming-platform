@@ -27,7 +27,7 @@ import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.FilePO;
 import raptor.streaming.hadoop.bean.YarnAppPO;
 import raptor.streaming.hadoop.bean.YarnClusterPO;
-import raptor.streaming.server.constants.Constant;
+import raptor.streaming.server.common.constants.Constant;
 import raptor.streaming.server.dao.ClusterDao;
 import raptor.streaming.server.entity.ClusterEntity;
 import raptor.streaming.server.utils.Utils;

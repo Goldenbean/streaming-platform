@@ -63,6 +63,12 @@ public class BaseEntity<T extends Model> extends Model {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @ApiModelProperty(value = "更新时间", dataType = "java.util.Date")
     private Date gmtModify;
+
+    /**
+     * 备注信息
+     */
+    @ApiModelProperty(value = "备注信息")
+    private String remark;
 //    /**
 //     * 删除标记
 //     */

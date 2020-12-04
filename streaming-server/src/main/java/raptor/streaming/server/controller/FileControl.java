@@ -18,7 +18,7 @@ import raptor.streaming.hadoop.bean.FilePO;
 import raptor.streaming.server.utils.BootUtil;
 import raptor.streaming.server.common.entity.DataResult;
 import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.constants.Constant;
+import raptor.streaming.server.common.constants.Constant;
 import raptor.streaming.server.service.HadoopService;
 import raptor.streaming.server.common.entity.Tuple2;
 

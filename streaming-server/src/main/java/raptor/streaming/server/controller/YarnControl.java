@@ -13,7 +13,7 @@ import raptor.streaming.hadoop.bean.YarnAppPO;
 import raptor.streaming.server.common.entity.ListResult;
 import raptor.streaming.server.common.entity.RestResult;
 import raptor.streaming.server.service.HadoopService;
-import raptor.streaming.server.constants.Constant;
+import raptor.streaming.server.common.constants.Constant;
 
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/yarn")

@@ -1,7 +1,7 @@
 package raptor.streaming.server.controller;
 
 import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.constants.Constant;
+import raptor.streaming.server.common.constants.Constant;
 import raptor.streaming.server.service.JobActionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

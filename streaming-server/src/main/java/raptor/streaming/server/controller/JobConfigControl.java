@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import raptor.streaming.server.utils.BootUtil;
 import raptor.streaming.server.common.entity.DataResult;
 import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.constants.Constant;
+import raptor.streaming.server.common.constants.Constant;
 import raptor.streaming.server.service.JobService;
 import raptor.streaming.server.common.entity.Job;
 import org.slf4j.Logger;

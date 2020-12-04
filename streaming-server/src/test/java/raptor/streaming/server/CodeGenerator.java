@@ -37,7 +37,7 @@ public class CodeGenerator {
         //生成路径(一般都是生成在此项目的src/main/java下面)
         .setOutputDir(projectPath + "/src/main/java")
         .setAuthor("azhe")//设置作者
-        .setFileOverride(false)//第二次生成会把第一次生成的覆盖掉
+        .setFileOverride(true)//第二次生成会把第一次生成的覆盖掉
         .setIdType(IdType.AUTO)//主键策略
         .setServiceName("%sService")//生成的service接口名字首字母是否为I，这样设置就没有I
         .setMapperName("%sDao")
@@ -50,10 +50,10 @@ public class CodeGenerator {
     DataSourceConfig dataSourceConfig = new DataSourceConfig();
     dataSourceConfig.setDbType(DbType.MYSQL)//数据库类型
         .setDriverName("com.mysql.jdbc.Driver")
-        .setTypeConvert(new MySqlTypeConvert(){
+        .setTypeConvert(new MySqlTypeConvert() {
           @Override
           public IColumnType processTypeConvert(GlobalConfig config, String fieldType) {
-            if ( fieldType.toLowerCase().contains( "blob" ) ) {
+            if (fieldType.toLowerCase().contains("blob")) {
               return DbColumnType.BYTE_ARRAY;
             }
             return (DbColumnType) super.processTypeConvert(config, fieldType);
@@ -67,8 +67,8 @@ public class CodeGenerator {
 
     //4、包名策略配置
     PackageConfig packageConfig = new PackageConfig();
-    packageConfig.setParent("raptor.streaming.server")//设置包名的parent
-        .setModuleName("streaming")
+    packageConfig.setParent("raptor.streaming")//设置包名的parent
+        .setModuleName("server")
         .setMapper("dao")
         .setService("service")
         .setController("controller")
@@ -79,12 +79,12 @@ public class CodeGenerator {
     strategyConfig.setCapitalMode(true)//开启全局大写命名
         .setNaming(NamingStrategy.underline_to_camel)//下划线到驼峰的命名方式
         .setTablePrefix("sys_")//表名前缀
-        .setSuperEntityClass("raptor.streaming.server.boot.common.entity.BaseEntity")
+        .setSuperEntityClass("raptor.streaming.server.common.entity.BaseEntity")
         .setEntityTableFieldAnnotationEnable(true)
-        .setSuperEntityColumns("id", "modifier", "creater", "gmt_create", "gmt_modify")
+        .setSuperEntityColumns("id", "modifier", "creater", "gmt_create", "gmt_modify", "remark")
         .setEntityLombokModel(true)//使用lombok
         .setRestControllerStyle(true)
-        .setInclude("sys_cluster");//逆向工程使用的表
+        .setInclude("sys_user");//逆向工程使用的表
 
     // 自定义配置
     InjectionConfig cfg = new InjectionConfig() {
@@ -126,8 +126,9 @@ public class CodeGenerator {
     // 配置自定义输出模板
     //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
     // templateConfig.setEntity("templates/entity2.java");
-    // templateConfig.setService();
-    // templateConfig.setController();
+//    templateConfig.setService(null);
+//    templateConfig.setServiceImpl(null);
+    templateConfig.setController(null);
     templateConfig.setXml(null);
 
 //        .setXml("mapper");//设置xml文件的目录

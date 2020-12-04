@@ -1,4 +1,4 @@
-package raptor.streaming.server.constants;
+package raptor.streaming.server.common.constants;
 
 /**
  * Created by azhe on 2020-11-18 16:42
