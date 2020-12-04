@@ -16,17 +16,23 @@
 
   <properties>
     <flink.version>1.11.1</flink.version>
-<!--    <flink.version>1.11-SNAPSHOT</flink.version>-->
+    <!--    <flink.version>1.11-SNAPSHOT</flink.version>-->
     <scala.binary.version>2.12</scala.binary.version>
     <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
-<!--    <spring-framework.version>5.1.9.RELEASE</spring-framework.version>-->
+    <!--    <spring-framework.version>5.1.9.RELEASE</spring-framework.version>-->
     <pagehelper.version>5.0.0</pagehelper.version>
     <guava.version>18.0</guava.version>
     <fastjson.version>1.2.70</fastjson.version>
     <typesafe.config.version>1.3.2</typesafe.config.version>
     <slf4j.version>1.7.28</slf4j.version>
     <logback.version>1.2.3</logback.version>
+    <lombok.version>1.18.4</lombok.version>
+    <mybatis-plus.version>3.4.1</mybatis-plus.version>
+    <velocity.version>2.2</velocity.version>
+    <swagger2.version>2.7.0</swagger2.version>
+
     <junit.version>4.12</junit.version>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -49,13 +55,13 @@
           </exclusion>
         </exclusions>
       </dependency>
-<!--      <dependency>-->
-<!--        <groupId>org.springframework</groupId>-->
-<!--        <artifactId>spring-framework-bom</artifactId>-->
-<!--        <version>${spring-framework.version}</version>-->
-<!--        <type>pom</type>-->
-<!--        <scope>import</scope>-->
-<!--      </dependency>-->
+      <!--      <dependency>-->
+      <!--        <groupId>org.springframework</groupId>-->
+      <!--        <artifactId>spring-framework-bom</artifactId>-->
+      <!--        <version>${spring-framework.version}</version>-->
+      <!--        <type>pom</type>-->
+      <!--        <scope>import</scope>-->
+      <!--      </dependency>-->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -138,8 +144,36 @@
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.18.4</version>
+        <version>${lombok.version}</version>
         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-generator</artifactId>
+        <version>${mybatis-plus.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.velocity</groupId>
+        <artifactId>velocity-engine-core</artifactId>
+        <version>${velocity.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger2</artifactId>
+        <version>${swagger2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger-ui</artifactId>
+        <version>${swagger2.version}</version>
       </dependency>
 
       <dependency>
