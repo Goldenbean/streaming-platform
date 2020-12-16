@@ -78,13 +78,13 @@ public class CodeGenerator {
     StrategyConfig strategyConfig = new StrategyConfig();
     strategyConfig.setCapitalMode(true)//开启全局大写命名
         .setNaming(NamingStrategy.underline_to_camel)//下划线到驼峰的命名方式
-        .setTablePrefix("sys_")//表名前缀
+        .setTablePrefix("dw_")//表名前缀
         .setSuperEntityClass("raptor.streaming.server.common.entity.BaseEntity")
         .setEntityTableFieldAnnotationEnable(true)
         .setSuperEntityColumns("id", "modifier", "creater", "gmt_create", "gmt_modify", "remark")
         .setEntityLombokModel(true)//使用lombok
         .setRestControllerStyle(true)
-        .setInclude("sys_user");//逆向工程使用的表
+        .setInclude("dw_source","dw_table");//逆向工程使用的表
 
     // 自定义配置
     InjectionConfig cfg = new InjectionConfig() {

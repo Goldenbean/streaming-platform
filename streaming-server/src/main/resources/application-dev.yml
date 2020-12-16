@@ -68,15 +68,10 @@ log:
 
 logging:
   file:
-#    name: /Users/azhe/stream/streaming-platform/logs1/sd.log
-  #  file:
-#    max-size: 10MB
-#    max-history: 1
-    path: /Users/azhe/stream/streaming-platform/logs
-#    name: apps.log
-  #  path: /var/logs/you_application_name/
+    max-size: 10MB
+    max-history: 7
+    path: logs
   #配置日志文件路径 不同目录下的日志可配置不同级别
 #  level:
-
 #    raptor.streaming.server.dao: info
 #    raptor.streaming.server.service: info
