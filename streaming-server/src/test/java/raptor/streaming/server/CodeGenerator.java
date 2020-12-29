@@ -83,9 +83,14 @@ public class CodeGenerator {
         .setEntityTableFieldAnnotationEnable(true)
         .setLogicDeleteFieldName("deleted")
         .setSuperEntityColumns("id", "modifier", "creater", "gmt_create", "gmt_modify", "remark")
-        .setEntityLombokModel(true)//使用lombok
+        .setEntityLombokModel(false)//使用lombok
         .setRestControllerStyle(true)
-        .setInclude("dev_file_system");//逆向工程使用的表
+        .setInclude(
+//            "dev_file_system"
+            "dev_job_file"
+//            "dw_source","dw_table"
+//            "sys_cluster","sys_project","sys_user"
+        );//逆向工程使用的表
 //        .setInclude("dev_job_file");//逆向工程使用的表
 
     // 自定义配置

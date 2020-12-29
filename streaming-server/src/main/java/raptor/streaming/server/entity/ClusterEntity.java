@@ -9,8 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -18,10 +16,8 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author azhe
- * @since 2020-12-03
+ * @since 2020-12-29
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("sys_cluster")
 @ApiModel(value="ClusterEntity对象", description="集群列表")
 public class ClusterEntity extends BaseEntity<ClusterEntity> {
@@ -69,9 +65,104 @@ public class ClusterEntity extends BaseEntity<ClusterEntity> {
     private Integer totalCores;
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public byte[] getConfigFile() {
+        return configFile;
+    }
+
+    public void setConfigFile(byte[] configFile) {
+        this.configFile = configFile;
+    }
+
+    public String getConfigFileMd5() {
+        return configFileMd5;
+    }
+
+    public void setConfigFileMd5(String configFileMd5) {
+        this.configFileMd5 = configFileMd5;
+    }
+
+    public String getConfigFileName() {
+        return configFileName;
+    }
+
+    public void setConfigFileName(String configFileName) {
+        this.configFileName = configFileName;
+    }
+
+    public String getSpuConf() {
+        return spuConf;
+    }
+
+    public void setSpuConf(String spuConf) {
+        this.spuConf = spuConf;
+    }
+
+    public String getClusterConf() {
+        return clusterConf;
+    }
+
+    public void setClusterConf(String clusterConf) {
+        this.clusterConf = clusterConf;
+    }
+
+    public Integer getTotalNodes() {
+        return totalNodes;
+    }
+
+    public void setTotalNodes(Integer totalNodes) {
+        this.totalNodes = totalNodes;
+    }
+
+    public Double getTotalMemory() {
+        return totalMemory;
+    }
+
+    public void setTotalMemory(Double totalMemory) {
+        this.totalMemory = totalMemory;
+    }
+
+    public Integer getTotalCores() {
+        return totalCores;
+    }
+
+    public void setTotalCores(Integer totalCores) {
+        this.totalCores = totalCores;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "ClusterEntity{" +
+        "name=" + name +
+        ", type=" + type +
+        ", configFile=" + configFile +
+        ", configFileMd5=" + configFileMd5 +
+        ", configFileName=" + configFileName +
+        ", spuConf=" + spuConf +
+        ", clusterConf=" + clusterConf +
+        ", totalNodes=" + totalNodes +
+        ", totalMemory=" + totalMemory +
+        ", totalCores=" + totalCores +
+        "}";
+    }
 }

@@ -9,8 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -18,10 +16,8 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author azhe
- * @since 2020-12-08
+ * @since 2020-12-29
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("dw_table")
 @ApiModel(value="TableEntity对象", description="数仓表")
 public class TableEntity extends BaseEntity<TableEntity> {
@@ -53,9 +49,68 @@ public class TableEntity extends BaseEntity<TableEntity> {
     private String configJson;
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
+    public Long getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(Long appKey) {
+        this.appKey = appKey;
+    }
+
+    public String getTableSchema() {
+        return tableSchema;
+    }
+
+    public void setTableSchema(String tableSchema) {
+        this.tableSchema = tableSchema;
+    }
+
+    public String getConfigJson() {
+        return configJson;
+    }
+
+    public void setConfigJson(String configJson) {
+        this.configJson = configJson;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "TableEntity{" +
+        "name=" + name +
+        ", type=" + type +
+        ", sourceName=" + sourceName +
+        ", appKey=" + appKey +
+        ", tableSchema=" + tableSchema +
+        ", configJson=" + configJson +
+        "}";
+    }
 }

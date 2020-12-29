@@ -9,8 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -18,10 +16,8 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author azhe
- * @since 2020-12-08
+ * @since 2020-12-29
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("dw_source")
 @ApiModel(value="SourceEntity对象", description="数据源列表")
 public class SourceEntity extends BaseEntity<SourceEntity> {
@@ -49,9 +45,59 @@ public class SourceEntity extends BaseEntity<SourceEntity> {
     private Long appKey;
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getConfig() {
+        return config;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
+    }
+
+    public Long getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(Long appKey) {
+        this.appKey = appKey;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "SourceEntity{" +
+        "name=" + name +
+        ", type=" + type +
+        ", ip=" + ip +
+        ", config=" + config +
+        ", appKey=" + appKey +
+        "}";
+    }
 }

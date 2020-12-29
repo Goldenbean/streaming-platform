@@ -9,8 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -18,10 +16,8 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author azhe
- * @since 2020-12-03
+ * @since 2020-12-29
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("sys_project")
 @ApiModel(value="ProjectEntity对象", description="")
 public class ProjectEntity extends BaseEntity<ProjectEntity> {
@@ -45,9 +41,50 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> {
     private String users;
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getAdminUserName() {
+        return adminUserName;
+    }
+
+    public void setAdminUserName(String adminUserName) {
+        this.adminUserName = adminUserName;
+    }
+
+    public String getUsers() {
+        return users;
+    }
+
+    public void setUsers(String users) {
+        this.users = users;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "ProjectEntity{" +
+        "name=" + name +
+        ", code=" + code +
+        ", adminUserName=" + adminUserName +
+        ", users=" + users +
+        "}";
+    }
 }

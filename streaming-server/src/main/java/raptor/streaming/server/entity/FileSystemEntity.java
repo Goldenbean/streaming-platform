@@ -10,8 +10,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -19,10 +17,8 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author azhe
- * @since 2020-12-28
+ * @since 2020-12-29
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("dev_file_system")
 @ApiModel(value="FileSystemEntity对象", description="资源管理")
 public class FileSystemEntity extends BaseEntity<FileSystemEntity> {
@@ -63,9 +59,86 @@ public class FileSystemEntity extends BaseEntity<FileSystemEntity> {
     private String type;
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(Long appKey) {
+        this.appKey = appKey;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getTabFolder() {
+        return tabFolder;
+    }
+
+    public void setTabFolder(String tabFolder) {
+        this.tabFolder = tabFolder;
+    }
+
+    public String getParentPath() {
+        return parentPath;
+    }
+
+    public void setParentPath(String parentPath) {
+        this.parentPath = parentPath;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public Integer getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "FileSystemEntity{" +
+        "name=" + name +
+        ", appKey=" + appKey +
+        ", parentId=" + parentId +
+        ", tabFolder=" + tabFolder +
+        ", parentPath=" + parentPath +
+        ", filePath=" + filePath +
+        ", deleted=" + deleted +
+        ", type=" + type +
+        "}";
+    }
 }
