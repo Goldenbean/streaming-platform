@@ -78,13 +78,15 @@ public class CodeGenerator {
     StrategyConfig strategyConfig = new StrategyConfig();
     strategyConfig.setCapitalMode(true)//开启全局大写命名
         .setNaming(NamingStrategy.underline_to_camel)//下划线到驼峰的命名方式
-        .setTablePrefix("dw_")//表名前缀
+        .setTablePrefix("dev_")//表名前缀
         .setSuperEntityClass("raptor.streaming.server.common.entity.BaseEntity")
         .setEntityTableFieldAnnotationEnable(true)
+        .setLogicDeleteFieldName("deleted")
         .setSuperEntityColumns("id", "modifier", "creater", "gmt_create", "gmt_modify", "remark")
         .setEntityLombokModel(true)//使用lombok
         .setRestControllerStyle(true)
-        .setInclude("dw_source","dw_table");//逆向工程使用的表
+        .setInclude("dev_file_system");//逆向工程使用的表
+//        .setInclude("dev_job_file");//逆向工程使用的表
 
     // 自定义配置
     InjectionConfig cfg = new InjectionConfig() {
@@ -126,8 +128,13 @@ public class CodeGenerator {
     // 配置自定义输出模板
     //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
     // templateConfig.setEntity("templates/entity2.java");
-//    templateConfig.setService(null);
-//    templateConfig.setServiceImpl(null);
+
+    templateConfig.setMapper(null);
+//    不重新生成service
+    templateConfig.setService(null);
+    //    不重新生成serviceImpl
+    templateConfig.setServiceImpl(null);
+    //    不重新生成Controller
     templateConfig.setController(null);
     templateConfig.setXml(null);
 

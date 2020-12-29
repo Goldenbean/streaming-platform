@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="raptor.streaming.server.dao.JobFileDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="raptor.streaming.server.entity.JobFileEntity">
+        <result column="id" property="id" />
+        <result column="remark" property="remark" />
+        <result column="creater" property="creater" />
+        <result column="modifier" property="modifier" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modify" property="gmtModify" />
+        <result column="file_id" property="fileId" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="app_key" property="appKey" />
+        <result column="content" property="content" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        remark,
+        creater,
+        modifier,
+        gmt_create,
+        gmt_modify,
+        file_id, name, type, app_key, content
+    </sql>
+
+</mapper>

@@ -1,0 +1,71 @@
+package raptor.streaming.server.entity;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import raptor.streaming.server.common.entity.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * <p>
+ * 资源管理
+ * </p>
+ *
+ * @author azhe
+ * @since 2020-12-28
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@TableName("dev_file_system")
+@ApiModel(value="FileSystemEntity对象", description="资源管理")
+public class FileSystemEntity extends BaseEntity<FileSystemEntity> {
+
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "文件夹名称")
+    @TableField("name")
+    private String name;
+
+    @ApiModelProperty(value = "项目id")
+    @TableField("app_key")
+    private Long appKey;
+
+    @ApiModelProperty(value = "父节点ID，根节点为：-1")
+    @TableField("parent_id")
+    private Integer parentId;
+
+    @ApiModelProperty(value = "功能目录：resource")
+    @TableField("tab_folder")
+    private String tabFolder;
+
+    @ApiModelProperty(value = "作业路径目录")
+    @TableField("parent_path")
+    private String parentPath;
+
+    @ApiModelProperty(value = "hdfs路径")
+    @TableField("file_path")
+    private String filePath;
+
+    @ApiModelProperty(value = "是否逻辑删除，0 否 1 是")
+    @TableField("deleted")
+    @TableLogic
+    private Integer deleted;
+
+    @ApiModelProperty(value = "类型：目录、作业任务、资源、函数，枚举值：dir,job、res、fun")
+    @TableField("type")
+    private String type;
+
+
+    @Override
+    protected Serializable pkVal() {
+        return null;
+    }
+
+}
