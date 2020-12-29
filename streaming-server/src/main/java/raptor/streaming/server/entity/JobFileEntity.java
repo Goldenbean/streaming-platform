@@ -9,8 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -18,10 +16,8 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author azhe
- * @since 2020-12-25
+ * @since 2020-12-29
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("dev_job_file")
 @ApiModel(value="JobFileEntity对象", description="作业文件表")
 public class JobFileEntity extends BaseEntity<JobFileEntity> {
@@ -49,9 +45,59 @@ public class JobFileEntity extends BaseEntity<JobFileEntity> {
     private String content;
 
 
+    public Long getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(Long fileId) {
+        this.fileId = fileId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Long getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(Long appKey) {
+        this.appKey = appKey;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "JobFileEntity{" +
+        "fileId=" + fileId +
+        ", name=" + name +
+        ", type=" + type +
+        ", appKey=" + appKey +
+        ", content=" + content +
+        "}";
+    }
 }
