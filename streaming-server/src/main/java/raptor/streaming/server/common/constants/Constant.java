@@ -1,17 +1,13 @@
 package raptor.streaming.server.common.constants;
 
-/**
- * Created by azhe on 2020-11-18 16:42
- */
-
 import java.io.File;
 
 public class Constant {
 
   public static final String API_PREFIX = "/api";
   public static final String URI_SEPARATOR = "/";
-  public static final String VERSION = "v2";
-  public static final String API_PREFIX_URI=API_PREFIX+URI_SEPARATOR+VERSION;
+  public static final String VERSION = "v1";
+  public static final String API_PREFIX_URI = API_PREFIX + URI_SEPARATOR + VERSION;
   public static final String STREAM_FLINK_DIST_JAR = "stream.flink.dist.jar";
   public static final String STREAM_YARN_QUEUE = "stream.yarn.queue";
   public static final String STREAM_YARN_CLUSTER_NAME = "stream.yarn.cluster.name";
@@ -42,7 +38,8 @@ public class Constant {
   public static final String STREAM_SPU_SLOTS_KEY = "stream.spu.slots";
 
   static {
-    CONFIG_DIR_BASE = System.getProperty("user.home") + File.separator + ".streaming/" + VERSION + "/yarn";
+    CONFIG_DIR_BASE =
+        System.getProperty("user.home") + File.separator + ".streaming/" + VERSION + "/yarn";
     LOCAL_SQL_PLUGINS_DIR = System.getProperty("user.home") + File.separator + ".streaming/plugins";
   }
 

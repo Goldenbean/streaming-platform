@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raptor.streaming.hadoop.bean.YarnAppPO;
-import raptor.streaming.server.common.entity.ListResult;
+import raptor.streaming.server.common.constants.Constant;
+import raptor.streaming.server.common.entity.DataResult;
 import raptor.streaming.server.common.entity.RestResult;
 import raptor.streaming.server.service.HadoopService;
-import raptor.streaming.server.common.constants.Constant;
 
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/yarn")
@@ -25,10 +25,11 @@ public class YarnControl {
   private HadoopService hadoopService;
 
   @GetMapping(value = "/")
-  public RestResult get(@RequestParam("name") String clusterName, @RequestParam(value = "state", required = false, defaultValue = "") String state) {
+  public RestResult get(@RequestParam("name") String clusterName,
+      @RequestParam(value = "state", required = false, defaultValue = "") String state) {
     try {
       List<YarnAppPO> ret = hadoopService.getYarnApplication(clusterName, state);
-      return new ListResult<>(ret);
+      return new DataResult<>(ret);
     } catch (Exception ex) {
       logger.error("", ex);
       return RestResult.getFailed();
@@ -36,7 +37,8 @@ public class YarnControl {
   }
 
   @GetMapping(value = "/action/stop")
-  public RestResult actionStop(@RequestParam("name") String clusterName, @RequestParam("id") String id) {
+  public RestResult actionStop(@RequestParam("name") String clusterName,
+      @RequestParam("id") String id) {
     try {
       hadoopService.killYarnApplication(clusterName, id);
       return RestResult.getSuccess();
