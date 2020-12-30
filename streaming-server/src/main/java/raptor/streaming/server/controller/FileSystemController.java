@@ -48,10 +48,15 @@ public class FileSystemController {
       @RequestParam(value = "appKey") Integer appKey,
       @RequestParam(value = "tabFolder") String tabFolder,
       @RequestParam(value = "parentId", required = false, defaultValue = "-1") Integer parentId,
-      @RequestParam(value = "onlyDir", required = false, defaultValue = "false") boolean onlyDir
+      @RequestParam(value = "onlyDir", required = false, defaultValue = "false") boolean onlyDir,
+      @RequestParam(value = "searchKey", required = false, defaultValue = "") String searchKey
+
   ) {
 
-    List<FileSystemEntity> fileList = fileSystemService.lambdaQuery().eq(FileSystemEntity::getTabFolder, tabFolder).eq(FileSystemEntity::getAppKey, appKey).eq(FileSystemEntity::getParentId, parentId)
+    List<FileSystemEntity> fileList = fileSystemService.lambdaQuery()
+        .eq(FileSystemEntity::getTabFolder, tabFolder)
+        .eq(FileSystemEntity::getAppKey, appKey)
+        .eq(FileSystemEntity::getParentId, parentId)
         .orderByAsc(FileSystemEntity::getType)
         .list();
 
@@ -71,13 +76,44 @@ public class FileSystemController {
     return new DataResult<>(list);
   }
 
+  @ApiOperation(value = "搜索文件列表")
+  @GetMapping(value = "/search")
+  public DataResult search(
+      @RequestParam(value = "appKey") Integer appKey,
+      @RequestParam(value = "tabFolder") String tabFolder,
+      @RequestParam(value = "searchKey", required = false, defaultValue = "") String searchKey
+
+  ) {
+
+    List<FileSystemEntity> fileList = fileSystemService.lambdaQuery()
+        .eq(FileSystemEntity::getTabFolder, tabFolder)
+        .eq(FileSystemEntity::getAppKey, appKey)
+        .like(FileSystemEntity::getName, searchKey)
+        .orderByAsc(FileSystemEntity::getType)
+        .list();
+
+    List<Map<String, Object>> list = Lists.newArrayList();
+    fileList.forEach(file -> {
+      boolean isLeaf = !file.getType().equals("dir");
+      Map<String, Object> map = parseFile(file, isLeaf);
+        if (isLeaf) {
+          list.add(map);
+        }
+    });
+
+    return new DataResult<>(list);
+  }
+
+
   @ApiOperation(value = "添加")
   @PostMapping(value = "/")
   public RestResult add(@RequestBody FileSystemEntity fileSystemEntity) {
-    if (fileSystemService.save(fileSystemEntity)) {
-      return RestResult.getSuccess();
-    } else {
-      return RestResult.getFailed();
+    try {
+      fileSystemService.save(fileSystemEntity);
+      return new DataResult<>(fileSystemEntity.getId());
+    } catch (Exception e) {
+      e.printStackTrace();
+      return RestResult.getFailed("添加失败！");
     }
   }
 
@@ -115,6 +151,7 @@ public class FileSystemController {
     });
     return new DataResult<>(list);
   }
+
 
   public Map<String, Object> parseFile(FileSystemEntity file, boolean isLeaf) {
     Map<String, Object> map = Maps.newHashMap();

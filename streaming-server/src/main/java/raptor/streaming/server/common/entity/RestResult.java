@@ -61,4 +61,9 @@ public class RestResult {
   public static RestResult getFailed() {
     return failedInstance;
   }
+
+  public static RestResult getFailed(String message) {
+    return new RestResult(false, 500,message);
+  }
+
 }
