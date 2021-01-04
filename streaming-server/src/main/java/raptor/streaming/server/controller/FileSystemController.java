@@ -1,5 +1,6 @@
 package raptor.streaming.server.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -23,6 +24,7 @@ import raptor.streaming.server.common.entity.CustomPage;
 import raptor.streaming.server.common.entity.DataResult;
 import raptor.streaming.server.common.entity.RestResult;
 import raptor.streaming.server.entity.FileSystemEntity;
+import raptor.streaming.server.entity.JobFileEntity;
 import raptor.streaming.server.service.FileSystemService;
 
 /**
@@ -109,7 +111,7 @@ public class FileSystemController {
   @PostMapping(value = "/")
   public RestResult add(@RequestBody FileSystemEntity fileSystemEntity) {
     try {
-      fileSystemService.save(fileSystemEntity);
+      fileSystemService.saveOrUpdate(fileSystemEntity);
       return new DataResult<>(fileSystemEntity.getId());
     } catch (Exception e) {
       e.printStackTrace();
@@ -117,6 +119,7 @@ public class FileSystemController {
     }
   }
 
+  @ApiOperation(value = "逻辑删除")
   @DeleteMapping(value = "/{name}/")
   public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
     if (fileSystemService.removeById(id)) {
@@ -125,6 +128,27 @@ public class FileSystemController {
       return RestResult.getFailed();
     }
   }
+
+  @ApiOperation(value = "物理删除")
+  @DeleteMapping(value = "/remove")
+  public RestResult removeByLogicId(@RequestParam(value = "id", required = true) long id) {
+    if (fileSystemService.removeByLogicId(id)>0) {
+      return RestResult.getSuccess();
+    } else {
+      return RestResult.getFailed();
+    }
+  }
+
+  @ApiOperation(value = "文件还原")
+  @PostMapping(value = "/rollBack")
+  public RestResult rollBack(@RequestBody FileSystemEntity fileSystemEntity) {
+    if (fileSystemService.updateLogicData(fileSystemEntity)>0) {
+      return RestResult.getSuccess();
+    } else {
+      return RestResult.getFailed();
+    }
+  }
+
 
   @PostMapping(value = "/update")
   public RestResult update(@RequestBody FileSystemEntity fileSystemEntity) {

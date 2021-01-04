@@ -26,4 +26,16 @@ public class FileSystemServiceImpl extends ServiceImpl<FileSystemDao, FileSystem
   public List<FileSystemEntity> selectLogicDeleted() {
     return fileSystemDao.selectLogicDeleted();
   }
+
+  @Override
+  public int removeByLogicId(Long id) {
+    return fileSystemDao.removeByLogicId(id);
+  }
+
+  @Override
+  public int updateLogicData(FileSystemEntity fileSystemEntity) {
+    return fileSystemDao.updateLogicData(fileSystemEntity);
+  }
+
+
 }

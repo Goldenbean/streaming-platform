@@ -16,4 +16,8 @@ public interface FileSystemService extends IService<FileSystemEntity> {
 
   List<FileSystemEntity> selectLogicDeleted();
 
+  int removeByLogicId(Long id);
+
+  int updateLogicData(FileSystemEntity fileSystemEntity);
+
 }

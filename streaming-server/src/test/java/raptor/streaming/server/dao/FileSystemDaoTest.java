@@ -32,7 +32,6 @@ public class FileSystemDaoTest {
     List<FileSystemEntity> fileSystemEntities2 = fileSystemDao.selectLogicDeleted();
     fileSystemEntities2.forEach(i-> System.out.println(i));
 
-
   }
 
 
