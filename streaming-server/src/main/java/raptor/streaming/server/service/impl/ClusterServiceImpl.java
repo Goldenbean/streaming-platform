@@ -55,7 +55,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
       hadoopService.addCluster(cluster);
       String clusterEngineDir = Constant.STREAM_ENGINES_BASE_DIR + File.separator + cluster.getName();
       hadoopService.createFolder(name, clusterEngineDir);
-      hadoopService.upload(name,clusterEngineDir,"engines/flink-1/sql","engines/flink-1/system");
+      hadoopService.upload(name,clusterEngineDir,"engines/flink-1.11.2/sql","engines/flink-1.11.2/system");
       return new RestResult(true, 200, "添加集群成功") ;
     }
 

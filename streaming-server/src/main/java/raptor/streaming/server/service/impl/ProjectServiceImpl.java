@@ -1,5 +1,6 @@
 package raptor.streaming.server.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import raptor.streaming.server.entity.ProjectEntity;
 import raptor.streaming.server.dao.ProjectDao;
 import raptor.streaming.server.service.ProjectService;
@@ -17,4 +18,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjectServiceImpl extends ServiceImpl<ProjectDao, ProjectEntity> implements ProjectService {
 
+  @Autowired
+  private ProjectDao projectDao;
+
+  @Override
+  public String selectClusterNameByPid(Long id) {
+    return projectDao.selectClusterNameByPid(id);
+  }
 }

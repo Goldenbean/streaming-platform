@@ -210,11 +210,12 @@ public class HadoopService {
     hadoopClient.delete(path);
   }
 
-  public void upload(String clusterName, String src, String dst) throws IOException {
+  public String upload(String clusterName, String src, String dst) throws IOException {
     HadoopClient hadoopClient = hadoopClientMap.get(clusterName);
 
     hadoopClient.upload(src, dst);
     logger.info("上传成功,path: {}",dst);
+    return hadoopClient.getFileSystem().getUri().toString()+dst;
   }
 
   @Async("clusterExecutor")

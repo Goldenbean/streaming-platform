@@ -67,8 +67,8 @@ public class FileControl {
     try {
       Tuple2<String, String> ret = BootUtil.saveMultipartFile(file, false);
       logger.info("upload: src [{}], dst [{}]", ret.getSecond(), path);
-      hadoopService.upload(name, ret.getSecond(), path + "/" + ret.getFirst());
-      return new RestResult(true, 200, path);
+      String resPath = hadoopService.upload(name, ret.getSecond(), path + "/" + ret.getFirst());
+      return new RestResult(true, 200, resPath);
 
     } catch (Exception ex) {
       logger.error("", ex);

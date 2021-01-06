@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-12-03
  */
 public interface ProjectService extends IService<ProjectEntity> {
+  String selectClusterNameByPid(Long id);
 
 }

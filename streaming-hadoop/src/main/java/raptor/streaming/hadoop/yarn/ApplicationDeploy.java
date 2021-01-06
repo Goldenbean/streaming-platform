@@ -42,16 +42,16 @@ public class ApplicationDeploy {
       throws ProgramInvocationException, IOException, ClusterDeploymentException {
 
     return deploy(deployConfig.getApplicationName(), deployConfig.getJarFilePath(), deployConfig
-        .getProgramArgs(), 4);
+        .getProgramArgs(), 4,"engines/flink-1.11.2");
 
   }
 
   public ClusterClientProvider<ApplicationId> deploy(String applicationName,
-      String jarPath, List<String> args, int spu)
+      String jarPath, List<String> args, int spu,String engineDirs)
       throws ProgramInvocationException, IOException, ClusterDeploymentException {
 
     // Configuration flinkConfiguration = YarnDeploy.load(DIST_ROOT + "/conf");
-    Configuration flinkConfiguration = YarnDeploy.load(flinkConfPath, applicationName);
+    Configuration flinkConfiguration = YarnDeploy.load(flinkConfPath, applicationName,engineDirs);
 
     flinkConfiguration.setInteger("parallelism.default", spu * 4);
     flinkConfiguration.setString(ConfigConstants.PATH_HADOOP_CONFIG, hadoopConfPath);

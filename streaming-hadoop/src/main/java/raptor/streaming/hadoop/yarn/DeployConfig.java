@@ -28,6 +28,8 @@ public class DeployConfig {
 
   private int spu = 1;
 
+  private String clusterName="";
+
   public DeployConfig() {
 
   }
@@ -38,6 +40,14 @@ public class DeployConfig {
     this.applicationName = applicationName;
     this.jarFilePath = jarPath;
     this.programArgs = args;
+  }
+
+  public String getClusterName() {
+    return clusterName;
+  }
+
+  public void setClusterName(String clusterName) {
+    this.clusterName = clusterName;
   }
 
   public String getApplicationName() {

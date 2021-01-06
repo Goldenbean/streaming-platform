@@ -22,7 +22,7 @@ import raptor.streaming.server.service.ProjectService;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author azhe
@@ -50,11 +50,11 @@ public class ProjectController {
 
   @ApiOperation(value = "添加项目")
   @PostMapping(value = "/")
-  public RestResult add( @RequestBody ProjectEntity projectEntity) {
-    if(projectService.save(projectEntity)){
-      return  RestResult.getSuccess();
-    }else{
-      return  RestResult.getFailed();
+  public RestResult add(@RequestBody ProjectEntity projectEntity) {
+    if (projectService.save(projectEntity)) {
+      return RestResult.getSuccess();
+    } else {
+      return RestResult.getFailed();
     }
   }
 
@@ -62,19 +62,31 @@ public class ProjectController {
   public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
     if (projectService.removeById(id)) {
       return RestResult.getSuccess();
-    }else {
+    } else {
       return RestResult.getFailed();
     }
   }
 
   @PostMapping(value = "/update")
   public RestResult update(@RequestBody ProjectEntity projectEntity) {
-    if (projectService.updateById(projectEntity)){
+    if (projectService.updateById(projectEntity)) {
       return RestResult.getSuccess();
     }
     return RestResult.getFailed();
   }
 
+  @ApiOperation(value = "根据AppKey获取集群名称")
+  @GetMapping(value = "/getClusterName")
+  public RestResult getClusterName(
+      @RequestParam(value = "id", required = true, defaultValue = "1") Long id
+  ) {
+    String clusterName = projectService.selectClusterNameByPid(id);
+
+    if (clusterName != null) {
+      return new DataResult<>(clusterName);
+    }
+    return RestResult.getFailed("该项目指定的集群不存在!");
+  }
 
 }
 

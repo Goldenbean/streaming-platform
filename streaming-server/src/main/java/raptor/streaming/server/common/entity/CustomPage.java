@@ -13,7 +13,6 @@ import lombok.Data;
  * @data: 2020-12-01 15:58
  **/
 @ApiModel
-@Data
 public class CustomPage<T> {
 
   //当前页数
@@ -48,4 +47,43 @@ public class CustomPage<T> {
     this.totalPage = (int) page.getPages();
   }
 
+  public int getCurPage() {
+    return curPage;
+  }
+
+  public void setCurPage(int curPage) {
+    this.curPage = curPage;
+  }
+
+  public int getPageSize() {
+    return pageSize;
+  }
+
+  public void setPageSize(int pageSize) {
+    this.pageSize = pageSize;
+  }
+
+  public int getTotal() {
+    return total;
+  }
+
+  public void setTotal(int total) {
+    this.total = total;
+  }
+
+  public List<T> getList() {
+    return list;
+  }
+
+  public void setList(List<T> list) {
+    this.list = list;
+  }
+
+  public int getTotalPage() {
+    return totalPage;
+  }
+
+  public void setTotalPage(int totalPage) {
+    this.totalPage = totalPage;
+  }
 }

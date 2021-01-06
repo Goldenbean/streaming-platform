@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author azhe
- * @since 2020-12-29
+ * @since 2021-01-05
  */
 @TableName("sys_project")
 @ApiModel(value="ProjectEntity对象", description="")
@@ -39,6 +39,14 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> {
     @ApiModelProperty(value = "项目成员")
     @TableField("users")
     private String users;
+
+    @ApiModelProperty(value = "集群id")
+    @TableField("cluster_id")
+    private Long clusterId;
+
+    @ApiModelProperty(value = "集群名称")
+    @TableField("cluster_name")
+    private String clusterName;
 
 
     public String getName() {
@@ -73,6 +81,22 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> {
         this.users = users;
     }
 
+    public Long getClusterId() {
+        return clusterId;
+    }
+
+    public void setClusterId(Long clusterId) {
+        this.clusterId = clusterId;
+    }
+
+    public String getClusterName() {
+        return clusterName;
+    }
+
+    public void setClusterName(String clusterName) {
+        this.clusterName = clusterName;
+    }
+
     @Override
     protected Serializable pkVal() {
         return null;
@@ -85,6 +109,8 @@ public class ProjectEntity extends BaseEntity<ProjectEntity> {
         ", code=" + code +
         ", adminUserName=" + adminUserName +
         ", users=" + users +
+        ", clusterId=" + clusterId +
+        ", clusterName=" + clusterName +
         "}";
     }
 }

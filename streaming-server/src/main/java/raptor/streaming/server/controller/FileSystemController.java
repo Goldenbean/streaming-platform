@@ -184,6 +184,9 @@ public class FileSystemController {
     map.put("isLeaf", isLeaf);
     map.put("parentPath", file.getParentPath());
     map.put("type", file.getType());
+    if(file.getType().equals("file")){
+      map.put("filePath",file.getFilePath());
+    }
     return map;
   }
 
