@@ -78,7 +78,7 @@ public class CodeGenerator {
     StrategyConfig strategyConfig = new StrategyConfig();
     strategyConfig.setCapitalMode(true)//开启全局大写命名
         .setNaming(NamingStrategy.underline_to_camel)//下划线到驼峰的命名方式
-        .setTablePrefix("sys_")//表名前缀
+        .setTablePrefix("ops_")//表名前缀
         .setSuperEntityClass("raptor.streaming.server.common.entity.BaseEntity")
         .setEntityTableFieldAnnotationEnable(true)
         .setLogicDeleteFieldName("deleted")
@@ -86,7 +86,7 @@ public class CodeGenerator {
         .setEntityLombokModel(false)//使用lombok
         .setRestControllerStyle(true)
         .setInclude(
-            "sys_project"
+            "ops_task"
 //            "dev_file_system"
 //            "dev_job_file"
 //            "dw_source","dw_table"

@@ -58,6 +58,10 @@ public class RestResult {
     return successInstance;
   }
 
+  public static RestResult getSuccess(String message) {
+    return new RestResult(true, 200,message);
+  }
+
   public static RestResult getFailed() {
     return failedInstance;
   }
