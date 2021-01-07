@@ -23,13 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
+import raptor.streaming.dao.ClusterDao;
+import raptor.streaming.dao.entity.ClusterEntity;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.FilePO;
 import raptor.streaming.hadoop.bean.YarnAppPO;
 import raptor.streaming.hadoop.bean.YarnClusterPO;
 import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.dao.ClusterDao;
-import raptor.streaming.server.entity.ClusterEntity;
 import raptor.streaming.server.utils.Utils;
 
 @Service
@@ -49,7 +49,8 @@ public class HadoopService {
   @PostConstruct
   private void init() throws Exception {
 
-    final List<ClusterEntity> clusterEntities = clusterDao.selectList(Wrappers.<ClusterEntity>query().eq("type", 1));
+    final List<ClusterEntity> clusterEntities = clusterDao
+        .selectList(Wrappers.<ClusterEntity>query().eq("type", 1));
 
     File configDir = new File(configDirPath);
 
@@ -83,13 +84,14 @@ public class HadoopService {
   }
 
 
-  public void destroyCluster(String clusterName,String hdfsConfigPath) throws IOException {
-    delete(clusterName,hdfsConfigPath);
+  public void destroyCluster(String clusterName, String hdfsConfigPath) throws IOException {
+    delete(clusterName, hdfsConfigPath);
     hadoopClientMap.remove(clusterName);
     logger.info("destroyCluster , ok");
   }
 
-  private void updateClusterConfig(ClusterEntity cluster, String clusterConfigDirPath) throws IOException {
+  private void updateClusterConfig(ClusterEntity cluster, String clusterConfigDirPath)
+      throws IOException {
     File clusterConfigDir = new File(clusterConfigDirPath);
     File[] files = clusterConfigDir.listFiles(new FilenameFilter() {
       @Override
@@ -194,7 +196,7 @@ public class HadoopService {
     HadoopClient hadoopClient = hadoopClientMap.get(clusterName);
 
     hadoopClient.exists(path, true);
-    logger.info("createFolder,成功,path: {}",path);
+    logger.info("createFolder,成功,path: {}", path);
 
   }
 
@@ -214,20 +216,20 @@ public class HadoopService {
     HadoopClient hadoopClient = hadoopClientMap.get(clusterName);
 
     hadoopClient.upload(src, dst);
-    logger.info("上传成功,path: {}",dst);
-    return hadoopClient.getFileSystem().getUri().toString()+dst;
+    logger.info("上传成功,path: {}", dst);
+    return hadoopClient.getFileSystem().getUri().toString() + dst;
   }
 
   @Async("clusterExecutor")
-  public void upload(String clusterName,String dst,String... srcs) throws IOException {
+  public void upload(String clusterName, String dst, String... srcs) throws IOException {
     HadoopClient hadoopClient = hadoopClientMap.get(clusterName);
-    hadoopClient.upload( dst,srcs);
-    logger.info("上传成功,path: {}",dst);
+    hadoopClient.upload(dst, srcs);
+    logger.info("上传成功,path: {}", dst);
   }
 
 
-
-  public List<YarnAppPO> getYarnApplication(String clusterName, String state) throws YarnException, IOException {
+  public List<YarnAppPO> getYarnApplication(String clusterName, String state)
+      throws YarnException, IOException {
     HadoopClient hadoopClient = hadoopClientMap.get(clusterName);
 
     if (Strings.isNullOrEmpty(state)) {
@@ -241,7 +243,8 @@ public class HadoopService {
         .collect(Collectors.toList());
   }
 
-  public void killYarnApplication(String clusterName, String appId) throws YarnException, IOException {
+  public void killYarnApplication(String clusterName, String appId)
+      throws YarnException, IOException {
     HadoopClient hadoopClient = hadoopClientMap.get(clusterName);
 
     hadoopClient.killYarnApplication(appId);

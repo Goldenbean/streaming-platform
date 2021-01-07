@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.common.entity.Tuple2;
+import raptor.streaming.server.common.domain.Tuple2;
+import raptor.streaming.server.common.http.DataResult;
+import raptor.streaming.server.common.http.RestResult;
 import raptor.streaming.server.service.HadoopService;
 import raptor.streaming.server.utils.BootUtil;
 

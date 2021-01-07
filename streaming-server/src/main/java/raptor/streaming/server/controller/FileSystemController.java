@@ -1,15 +1,11 @@
 package raptor.streaming.server.controller;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,22 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import raptor.streaming.dao.entity.FileSystemEntity;
 import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.entity.CustomPage;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.entity.FileSystemEntity;
-import raptor.streaming.server.entity.JobFileEntity;
-import raptor.streaming.server.service.FileSystemService;
+import raptor.streaming.server.common.http.DataResult;
+import raptor.streaming.server.common.http.RestResult;
+import raptor.streaming.server.repository.FileSystemService;
 
-/**
- * <p>
- * 数仓管理 前端控制器
- * </p>
- *
- * @author azhe
- * Created by azhe on 2020-12-16 17:27
- */
+
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/fileSystem")
 @Api(tags = "文件系统")
@@ -98,9 +85,9 @@ public class FileSystemController {
     fileList.forEach(file -> {
       boolean isLeaf = !file.getType().equals("dir");
       Map<String, Object> map = parseFile(file, isLeaf);
-        if (isLeaf) {
-          list.add(map);
-        }
+      if (isLeaf) {
+        list.add(map);
+      }
     });
 
     return new DataResult<>(list);
@@ -121,7 +108,8 @@ public class FileSystemController {
 
   @ApiOperation(value = "逻辑删除")
   @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
+  public RestResult delete(@PathVariable("name") String name,
+      @RequestParam(value = "id", required = true) long id) {
     if (fileSystemService.removeById(id)) {
       return RestResult.getSuccess();
     } else {
@@ -132,7 +120,7 @@ public class FileSystemController {
   @ApiOperation(value = "物理删除")
   @DeleteMapping(value = "/remove")
   public RestResult removeByLogicId(@RequestParam(value = "id", required = true) long id) {
-    if (fileSystemService.removeByLogicId(id)>0) {
+    if (fileSystemService.removeByLogicId(id) > 0) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -142,7 +130,7 @@ public class FileSystemController {
   @ApiOperation(value = "文件还原")
   @PostMapping(value = "/rollBack")
   public RestResult rollBack(@RequestBody FileSystemEntity fileSystemEntity) {
-    if (fileSystemService.updateLogicData(fileSystemEntity)>0) {
+    if (fileSystemService.updateLogicData(fileSystemEntity) > 0) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -184,8 +172,8 @@ public class FileSystemController {
     map.put("isLeaf", isLeaf);
     map.put("parentPath", file.getParentPath());
     map.put("type", file.getType());
-    if(file.getType().equals("file")){
-      map.put("filePath",file.getFilePath());
+    if (file.getType().equals("file")) {
+      map.put("filePath", file.getFilePath());
     }
     return map;
   }

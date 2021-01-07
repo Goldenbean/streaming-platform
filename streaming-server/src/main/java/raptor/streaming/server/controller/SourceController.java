@@ -12,20 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import raptor.streaming.dao.entity.SourceEntity;
+import raptor.streaming.dao.service.SourceService;
 import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.entity.CustomPage;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.entity.SourceEntity;
-import raptor.streaming.server.service.SourceService;
+import raptor.streaming.server.common.domain.CustomPage;
+import raptor.streaming.server.common.http.DataResult;
+import raptor.streaming.server.common.http.RestResult;
 
 /**
  * <p>
  * 数据源列表 前端控制器
  * </p>
  *
- * @author azhe
- * Created by azhe on 2020-12-07 17:27
+ * @author azhe Created by azhe on 2020-12-07 17:27
  */
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/source")
@@ -44,32 +43,34 @@ public class SourceController {
       @RequestParam(value = "appKey") Integer appKey
 
   ) {
-    Page<SourceEntity> page = sourceService.lambdaQuery().eq(SourceEntity::getAppKey,appKey).page(new Page<>(curPage, pageSize));
+    Page<SourceEntity> page = sourceService.lambdaQuery().eq(SourceEntity::getAppKey, appKey)
+        .page(new Page<>(curPage, pageSize));
     return new DataResult<>(new CustomPage(page));
   }
 
   @ApiOperation(value = "添加数据源")
   @PostMapping(value = "/")
-  public RestResult add( @RequestBody SourceEntity sourceEntity) {
-    if(sourceService.save(sourceEntity)){
-      return  RestResult.getSuccess();
-    }else{
-      return  RestResult.getFailed();
+  public RestResult add(@RequestBody SourceEntity sourceEntity) {
+    if (sourceService.save(sourceEntity)) {
+      return RestResult.getSuccess();
+    } else {
+      return RestResult.getFailed();
     }
   }
 
   @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
+  public RestResult delete(@PathVariable("name") String name,
+      @RequestParam(value = "id", required = true) long id) {
     if (sourceService.removeById(id)) {
       return RestResult.getSuccess();
-    }else {
+    } else {
       return RestResult.getFailed();
     }
   }
 
   @PostMapping(value = "/update")
   public RestResult update(@RequestBody SourceEntity sourceEntity) {
-    if (sourceService.updateById(sourceEntity)){
+    if (sourceService.updateById(sourceEntity)) {
       return RestResult.getSuccess();
     }
     return RestResult.getFailed();

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import raptor.streaming.dao.entity.ProjectEntity;
+import raptor.streaming.dao.service.ProjectService;
 import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.entity.CustomPage;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.entity.ProjectEntity;
-import raptor.streaming.server.service.ProjectService;
+import raptor.streaming.server.common.domain.CustomPage;
+import raptor.streaming.server.common.http.DataResult;
+import raptor.streaming.server.common.http.RestResult;
 
 /**
  * <p>
@@ -59,7 +59,8 @@ public class ProjectController {
   }
 
   @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
+  public RestResult delete(@PathVariable("name") String name,
+      @RequestParam(value = "id", required = true) long id) {
     if (projectService.removeById(id)) {
       return RestResult.getSuccess();
     } else {

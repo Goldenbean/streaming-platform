@@ -1,9 +1,5 @@
 package raptor.streaming.server.utils;
 
-/**
- * Created by azhe on 2020-11-18 16:44
- */
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;

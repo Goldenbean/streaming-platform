@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.FilePO;
-import raptor.streaming.server.utils.BootUtil;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
 import raptor.streaming.server.common.constants.Constant;
+import raptor.streaming.server.common.domain.Tuple2;
+import raptor.streaming.server.common.http.DataResult;
+import raptor.streaming.server.common.http.RestResult;
 import raptor.streaming.server.service.HadoopService;
-import raptor.streaming.server.common.entity.Tuple2;
+import raptor.streaming.server.utils.BootUtil;
 
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/files/")
@@ -33,7 +33,8 @@ public class FileControl {
 
 
   @GetMapping(value = "/list")
-  public RestResult list(@RequestParam("name") String name, @RequestParam(value = "path", required = true) String path) {
+  public RestResult list(@RequestParam("name") String name,
+      @RequestParam(value = "path", required = true) String path) {
 
     logger.info("list: path [{}]", path);
 
@@ -62,7 +63,8 @@ public class FileControl {
   }
 
   @PostMapping(value = "/upload")
-  public RestResult upload(@RequestParam("name") String name, @RequestParam("path") String path, @RequestParam("file") MultipartFile file) {
+  public RestResult upload(@RequestParam("name") String name, @RequestParam("path") String path,
+      @RequestParam("file") MultipartFile file) {
 
     try {
       Tuple2<String, String> ret = BootUtil.saveMultipartFile(file, false);
@@ -78,7 +80,8 @@ public class FileControl {
   }
 
   @GetMapping(value = "/read")
-  public RestResult read(@RequestParam("name") String clusterName, @RequestParam("path") String path) {
+  public RestResult read(@RequestParam("name") String clusterName,
+      @RequestParam("path") String path) {
     logger.info("read: path [{}]", path);
 
     String ret = hadoopService.read(clusterName, path);
@@ -88,7 +91,8 @@ public class FileControl {
 
 
   @GetMapping(value = "/folder")
-  public RestResult listFolder(@RequestParam("name") String clusterName, @RequestParam(value = "path", required = true) String path) {
+  public RestResult listFolder(@RequestParam("name") String clusterName,
+      @RequestParam(value = "path", required = true) String path) {
     logger.info("list: path [{}]", path);
 
     try {

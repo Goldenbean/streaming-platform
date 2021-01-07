@@ -79,7 +79,7 @@ public class CodeGenerator {
     strategyConfig.setCapitalMode(true)//开启全局大写命名
         .setNaming(NamingStrategy.underline_to_camel)//下划线到驼峰的命名方式
         .setTablePrefix("ops_")//表名前缀
-        .setSuperEntityClass("raptor.streaming.server.common.entity.BaseEntity")
+        .setSuperEntityClass("raptor.streaming.dao.entity.BaseEntity")
         .setEntityTableFieldAnnotationEnable(true)
         .setLogicDeleteFieldName("deleted")
         .setSuperEntityColumns("id", "modifier", "creater", "gmt_create", "gmt_modify", "remark")

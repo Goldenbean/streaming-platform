@@ -16,29 +16,22 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import raptor.streaming.dao.entity.ClusterEntity;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.YarnClusterPO;
-import raptor.streaming.server.common.entity.CustomPage;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
 import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.entity.ClusterEntity;
-import raptor.streaming.server.service.ClusterService;
+import raptor.streaming.server.common.domain.CustomPage;
+import raptor.streaming.server.common.http.DataResult;
+import raptor.streaming.server.common.http.RestResult;
+import raptor.streaming.server.repository.ClusterService;
 import raptor.streaming.server.service.HadoopService;
 
-/**
- * <p>
- * 集群列表 前端控制器
- * </p>
- *
- * @author azhe
- * @since 2020-12-02
- */
+
+
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/cluster")
 @Api(tags = "集群管理")
@@ -97,7 +90,8 @@ public class ClusterController {
 
 
   @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
+  public RestResult delete(@PathVariable("name") String name,
+      @RequestParam(value = "id", required = true) long id) {
 
     if (clusterService.removeById(id)) {
       String localConfigPath = Constant.CONFIG_DIR_BASE + File.separator + name;
@@ -118,7 +112,8 @@ public class ClusterController {
 
   @GetMapping(value = "/{name}/basic")
   public RestResult getBasic(@PathVariable("name") String name) {
-    ClusterEntity cluster = clusterService.getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
+    ClusterEntity cluster = clusterService
+        .getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
     if (cluster == null) {
       return new RestResult(true, 404, "集群不存在");
     }
@@ -128,7 +123,8 @@ public class ClusterController {
 
   @GetMapping(value = "/{name}/metrics")
   public RestResult getOverview(@PathVariable("name") String name) {
-    ClusterEntity cluster = clusterService.getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
+    ClusterEntity cluster = clusterService
+        .getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
     if (cluster == null) {
       return new RestResult(true, 404, "集群不存在");
     }
@@ -145,7 +141,8 @@ public class ClusterController {
         cluster.setTotalCores(yarnOverview.getCoresTotal());
         cluster.setTotalMemory((double) Math.round(yarnOverview.getMemTotal() / 1024 * 100) / 100);
         cluster.setTotalNodes(yarnOverview.getNodeList().size());
-        clusterService.update(cluster, new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
+        clusterService.update(cluster,
+            new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
       }
       return new DataResult<>(yarnOverview);
     } catch (Exception e) {

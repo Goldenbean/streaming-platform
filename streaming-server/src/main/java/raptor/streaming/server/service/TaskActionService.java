@@ -20,7 +20,8 @@ import org.springframework.stereotype.Service;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.yarn.ApplicationDeploy;
 import raptor.streaming.hadoop.yarn.DeployConfig;
-import raptor.streaming.server.common.entity.Job;
+import raptor.streaming.server.common.domain.Job;
+import raptor.streaming.server.repository.TaskService;
 
 
 @Service
@@ -132,6 +133,7 @@ public class TaskActionService {
       String appId = ret.getClusterClient().getClusterId().toString();
 
       logger.info("app id [{}]", appId);
+
       if (!Strings.isNullOrEmpty(appId)) {
         job.setYarnId(appId);
         job.setYarnStatus("");

@@ -1,0 +1,16 @@
+package raptor.streaming.dao;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import raptor.streaming.dao.entity.UserEntity;
+
+/**
+ * <p>
+ * Mapper 接口
+ * </p>
+ *
+ * @author azhe
+ * @since 2020-12-04
+ */
+public interface UserDao extends BaseMapper<UserEntity> {
+
+}

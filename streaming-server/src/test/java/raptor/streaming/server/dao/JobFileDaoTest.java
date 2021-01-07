@@ -1,17 +1,13 @@
 package raptor.streaming.server.dao;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.test.context.junit4.SpringRunner;
-import raptor.streaming.server.entity.JobFileEntity;
-import raptor.streaming.server.entity.TaskEntity;
+import raptor.streaming.dao.JobFileDao;
+import raptor.streaming.dao.entity.JobFileEntity;
 
 /**
  * Created by azhe on 2021-01-05 16:21
