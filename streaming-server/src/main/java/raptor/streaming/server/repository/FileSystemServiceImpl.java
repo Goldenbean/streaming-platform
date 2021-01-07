@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import raptor.streaming.dao.FileSystemDao;
+import raptor.streaming.dao.mapper.FileSystemDao;
 import raptor.streaming.dao.entity.FileSystemEntity;
 
 /**

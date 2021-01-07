@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import raptor.streaming.dao.TaskDao;
+import raptor.streaming.dao.mapper.TaskMapper;
 import raptor.streaming.dao.entity.TaskEntity;
 import raptor.streaming.hadoop.yarn.DeployConfig;
 import raptor.streaming.common.domain.Job;
@@ -20,10 +20,10 @@ import raptor.streaming.common.utils.BootUtil;
  * @since 2021-01-04
  */
 @Service
-public class TaskServiceImpl extends ServiceImpl<TaskDao, TaskEntity> implements TaskService {
+public class TaskServiceImpl extends ServiceImpl<TaskMapper, TaskEntity> implements TaskService {
 
   @Autowired
-  private TaskDao taskDao;
+  private TaskMapper taskMapper;
 
   @Autowired
   private HadoopService hadoopService;
@@ -31,7 +31,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskDao, TaskEntity> implements
   @Override
   public Job get(long id) {
 
-    TaskEntity taskEntity = taskDao.selectById(id);
+    TaskEntity taskEntity = taskMapper.selectById(id);
 
     if (taskEntity != null) {
       return toJob(taskEntity);
@@ -57,7 +57,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskDao, TaskEntity> implements
     if (job.getId() > 0) {
       if (get(job.getId()) != null) {
         taskEntity.setId(job.getId());
-        taskDao.updateById(taskEntity);
+        taskMapper.updateById(taskEntity);
         return get(taskEntity.getId());
       }
     }

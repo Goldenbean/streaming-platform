@@ -3,7 +3,7 @@ package raptor.streaming.dao.service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import raptor.streaming.dao.ProjectDao;
+import raptor.streaming.dao.mapper.ProjectDao;
 import raptor.streaming.dao.entity.ProjectEntity;
 
 /**

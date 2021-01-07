@@ -8,7 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import raptor.streaming.dao.ClusterDao;
+import raptor.streaming.dao.mapper.ClusterMapper;
 import raptor.streaming.dao.entity.ClusterEntity;
 import raptor.streaming.common.constants.Constant;
 import raptor.streaming.common.http.RestResult;
@@ -23,11 +23,11 @@ import raptor.streaming.server.service.HadoopService;
  * @since 2020-12-02
  */
 @Service
-public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> implements
+public class ClusterServiceImpl extends ServiceImpl<ClusterMapper, ClusterEntity> implements
     ClusterService {
 
   @Autowired
-  private ClusterDao clusterDao;
+  private ClusterMapper clusterMapper;
 
   @Autowired
   private HadoopService hadoopService;
@@ -37,7 +37,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
   public RestResult addCluster(String name, int type,
       String remark, String spuConf, MultipartFile file) throws IOException {
 
-    ClusterEntity cluster = clusterDao
+    ClusterEntity cluster = clusterMapper
         .selectOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
 
     if (cluster != null) {
@@ -68,7 +68,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
   public RestResult updateCluster(String name, int type,
       String remark,
       String spuConf, MultipartFile file) throws IOException {
-    ClusterEntity cluster = clusterDao
+    ClusterEntity cluster = clusterMapper
         .selectOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
     if (cluster == null) {
       return new RestResult(false, 404, "集群不存在");
@@ -78,7 +78,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
     cluster.setRemark(remark);
     cluster.setSpuConf(spuConf);
 
-    if (clusterDao.updateById(cluster) > 0) {
+    if (clusterMapper.updateById(cluster) > 0) {
       return new RestResult(true, 200, "更新集群成功");
     }
     return new RestResult(false, 200, "更新集群失败");

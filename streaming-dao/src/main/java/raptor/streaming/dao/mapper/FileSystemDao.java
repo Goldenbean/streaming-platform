@@ -1,4 +1,4 @@
-package raptor.streaming.dao;
+package raptor.streaming.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;

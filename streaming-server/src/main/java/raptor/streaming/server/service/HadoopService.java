@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
-import raptor.streaming.dao.ClusterDao;
+import raptor.streaming.dao.mapper.ClusterMapper;
 import raptor.streaming.dao.entity.ClusterEntity;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.FilePO;
@@ -41,7 +41,7 @@ public class HadoopService {
   private String configDirPath = Constant.CONFIG_DIR_BASE;
 
   @Autowired
-  private ClusterDao clusterDao;
+  private ClusterMapper clusterMapper;
 
   private Map<String, HadoopClient> hadoopClientMap = new HashMap<>();
 
@@ -49,7 +49,7 @@ public class HadoopService {
   @PostConstruct
   private void init() throws Exception {
 
-    final List<ClusterEntity> clusterEntities = clusterDao
+    final List<ClusterEntity> clusterEntities = clusterMapper
         .selectList(Wrappers.<ClusterEntity>query().eq("type", 1));
 
     File configDir = new File(configDirPath);
@@ -108,7 +108,7 @@ public class HadoopService {
       }
 
       cluster.setClusterConf(clusterConf.toJSONString());
-      clusterDao.updateById(cluster);
+      clusterMapper.updateById(cluster);
     }
 
   }

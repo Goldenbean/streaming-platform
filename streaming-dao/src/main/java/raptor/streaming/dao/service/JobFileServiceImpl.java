@@ -2,7 +2,7 @@ package raptor.streaming.dao.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import raptor.streaming.dao.JobFileDao;
+import raptor.streaming.dao.mapper.JobFileDao;
 import raptor.streaming.dao.entity.JobFileEntity;
 
 /**
