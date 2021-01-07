@@ -23,10 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import raptor.streaming.dao.entity.ClusterEntity;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.YarnClusterPO;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.domain.CustomPage;
-import raptor.streaming.server.common.http.DataResult;
-import raptor.streaming.server.common.http.RestResult;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.domain.CustomPage;
+import raptor.streaming.common.http.DataResult;
+import raptor.streaming.common.http.RestResult;
 import raptor.streaming.server.repository.ClusterService;
 import raptor.streaming.server.service.HadoopService;
 

@@ -2,7 +2,7 @@ package raptor.streaming.server.repository;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import raptor.streaming.dao.entity.TaskEntity;
-import raptor.streaming.server.common.domain.Job;
+import raptor.streaming.common.domain.Job;
 
 /**
  * <p>

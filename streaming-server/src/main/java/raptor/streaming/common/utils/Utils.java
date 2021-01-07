@@ -1,4 +1,4 @@
-package raptor.streaming.server.utils;
+package raptor.streaming.common.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

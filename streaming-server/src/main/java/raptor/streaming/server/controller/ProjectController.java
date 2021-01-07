@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raptor.streaming.dao.entity.ProjectEntity;
 import raptor.streaming.dao.service.ProjectService;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.domain.CustomPage;
-import raptor.streaming.server.common.http.DataResult;
-import raptor.streaming.server.common.http.RestResult;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.domain.CustomPage;
+import raptor.streaming.common.http.DataResult;
+import raptor.streaming.common.http.RestResult;
 
 /**
  * <p>

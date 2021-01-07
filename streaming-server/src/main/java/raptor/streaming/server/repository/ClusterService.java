@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 import raptor.streaming.dao.entity.ClusterEntity;
-import raptor.streaming.server.common.http.RestResult;
+import raptor.streaming.common.http.RestResult;
 
 /**
  * <p>

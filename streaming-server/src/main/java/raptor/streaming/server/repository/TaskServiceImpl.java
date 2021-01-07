@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import raptor.streaming.dao.TaskDao;
 import raptor.streaming.dao.entity.TaskEntity;
 import raptor.streaming.hadoop.yarn.DeployConfig;
-import raptor.streaming.server.common.domain.Job;
+import raptor.streaming.common.domain.Job;
 import raptor.streaming.server.service.HadoopService;
-import raptor.streaming.server.utils.BootUtil;
+import raptor.streaming.common.utils.BootUtil;
 
 /**
  * <p>

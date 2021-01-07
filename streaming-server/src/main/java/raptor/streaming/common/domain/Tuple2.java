@@ -1,4 +1,4 @@
-package raptor.streaming.server.common.domain;
+package raptor.streaming.common.domain;
 
 public class Tuple2<K, V> {
 

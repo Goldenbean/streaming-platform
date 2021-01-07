@@ -3,7 +3,6 @@ package raptor.streaming.server.dao;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import java.util.List;
 import javax.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -13,10 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import raptor.streaming.dao.FileSystemDao;
 import raptor.streaming.dao.entity.FileSystemEntity;
 
-/**
- * Created by azhe on 2020-12-16 19:38
- */
-@Slf4j
+
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
 @RunWith(SpringRunner.class)
 @SpringBootTest

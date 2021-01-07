@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.yarn.ApplicationDeploy;
 import raptor.streaming.hadoop.yarn.DeployConfig;
-import raptor.streaming.server.common.domain.Job;
+import raptor.streaming.common.domain.Job;
 import raptor.streaming.server.repository.TaskService;
 
 

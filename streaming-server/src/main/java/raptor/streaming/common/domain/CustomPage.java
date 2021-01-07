@@ -1,4 +1,4 @@
-package raptor.streaming.server.common.domain;
+package raptor.streaming.common.domain;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiModel;

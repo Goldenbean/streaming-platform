@@ -2,7 +2,7 @@
  * projectName: fendo-plus-boot fileName: SwaggerConfig.java packageName: com.gzsys.common.config
  * date: 2018-02-01 1:14 copyright(c) 2017-2020 xxx公司
  */
-package raptor.streaming.server.utils;
+package raptor.streaming.server.component;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

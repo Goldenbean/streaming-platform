@@ -1,4 +1,4 @@
-package raptor.streaming.server.common.constants;
+package raptor.streaming.common.constants;
 
 public enum ClusterTypeEnum {
   STANDALONE(0, "standalone"),

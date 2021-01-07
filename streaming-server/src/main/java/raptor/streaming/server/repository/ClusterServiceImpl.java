@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import raptor.streaming.dao.ClusterDao;
 import raptor.streaming.dao.entity.ClusterEntity;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.http.RestResult;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.http.RestResult;
 import raptor.streaming.server.service.HadoopService;
 
 /**

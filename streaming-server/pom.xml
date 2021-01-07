@@ -28,6 +28,7 @@
   </properties>
 
   <dependencies>
+    
     <dependency>
       <groupId>raptor.streaming</groupId>
       <artifactId>streaming-hadoop</artifactId>
@@ -38,6 +39,11 @@
           <artifactId>servlet-api</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>raptor.streaming</groupId>
+      <artifactId>streaming-dao</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>

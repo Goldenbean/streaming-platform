@@ -1,4 +1,4 @@
-package raptor.streaming.server.utils;
+package raptor.streaming.server.component;
 
 import java.util.concurrent.ThreadPoolExecutor;
 import org.springframework.context.annotation.Bean;

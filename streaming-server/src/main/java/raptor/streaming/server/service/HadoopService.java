@@ -29,8 +29,8 @@ import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.FilePO;
 import raptor.streaming.hadoop.bean.YarnAppPO;
 import raptor.streaming.hadoop.bean.YarnClusterPO;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.utils.Utils;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.utils.Utils;
 
 @Service
 @EnableAsync

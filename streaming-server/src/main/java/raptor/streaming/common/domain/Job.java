@@ -1,4 +1,4 @@
-package raptor.streaming.server.common.domain;
+package raptor.streaming.common.domain;
 
 import raptor.streaming.hadoop.yarn.DeployConfig;
 
