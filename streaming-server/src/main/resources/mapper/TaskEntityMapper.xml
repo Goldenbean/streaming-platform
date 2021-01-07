@@ -10,13 +10,14 @@
         <result column="modifier" property="modifier" />
         <result column="gmt_create" property="gmtCreate" />
         <result column="gmt_modify" property="gmtModify" />
-        <result column="action" property="action" />
-        <result column="config" property="config" />
         <result column="job_id" property="jobId" />
         <result column="yarn_id" property="yarnId" />
         <result column="flink_id" property="flinkId" />
+        <result column="deploy_id" property="deployId" />
+        <result column="action" property="action" />
+        <result column="config" property="config" />
+        <result column="info" property="info" />
         <result column="deleted" property="deleted" />
-        <result column="update" property="update" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -27,7 +28,7 @@
         modifier,
         gmt_create,
         gmt_modify,
-        action, config, job_id, yarn_id, flink_id, deleted, update
+        job_id, yarn_id, flink_id, deploy_id, action, config, info, deleted
     </sql>
 
 </mapper>

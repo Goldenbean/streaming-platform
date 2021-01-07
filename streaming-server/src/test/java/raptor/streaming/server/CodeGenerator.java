@@ -61,9 +61,9 @@ public class CodeGenerator {
           }
 
         })
-        .setUrl("jdbc:mysql://localhost:3306/streaming_v2.0?useUnicode=true&useSSL=false&characterEncoding=utf8")
+        .setUrl("jdbc:mysql://stream-2:3306/streaming?useUnicode=true&useSSL=false&characterEncoding=utf8")
         .setUsername("root")
-        .setPassword("jkljkl");
+        .setPassword("123456");
 
     //4、包名策略配置
     PackageConfig packageConfig = new PackageConfig();

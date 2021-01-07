@@ -60,7 +60,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskDao, TaskEntity> implements
     if (job.getId() > 0) {
       if (get(job.getId()) != null) {
         taskEntity.setId(job.getId());
-        taskDao.updatexById(taskEntity);
+        taskDao.updateById(taskEntity);
         return get(taskEntity.getId());
       }
     }

@@ -25,14 +25,6 @@ public class TaskEntity extends BaseEntity<TaskEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "1 deploy, 0 stop")
-    @TableField("action")
-    private Long action;
-
-    @ApiModelProperty(value = "启动相关的配置文件")
-    @TableField("config")
-    private String config;
-
     @TableField("job_id")
     private Long jobId;
 
@@ -42,30 +34,25 @@ public class TaskEntity extends BaseEntity<TaskEntity> {
     @TableField("flink_id")
     private String flinkId;
 
+    @TableField("deploy_id")
+    private String deployId;
+
+    @ApiModelProperty(value = "1 ready to deploy, 0 ready to stop")
+    @TableField("action")
+    private Integer action;
+
+    @ApiModelProperty(value = "启动相关的配置文件")
+    @TableField("config")
+    private String config;
+
+    @TableField("info")
+    private String info;
+
     @ApiModelProperty(value = "是否逻辑删除，0 否 1 是")
     @TableField("deleted")
     @TableLogic
     private Integer deleted;
 
-    @TableField("update")
-    private String update;
-
-
-    public Long getAction() {
-        return action;
-    }
-
-    public void setAction(Long action) {
-        this.action = action;
-    }
-
-    public String getConfig() {
-        return config;
-    }
-
-    public void setConfig(String config) {
-        this.config = config;
-    }
 
     public Long getJobId() {
         return jobId;
@@ -91,20 +78,44 @@ public class TaskEntity extends BaseEntity<TaskEntity> {
         this.flinkId = flinkId;
     }
 
+    public String getDeployId() {
+        return deployId;
+    }
+
+    public void setDeployId(String deployId) {
+        this.deployId = deployId;
+    }
+
+    public Integer getAction() {
+        return action;
+    }
+
+    public void setAction(Integer action) {
+        this.action = action;
+    }
+
+    public String getConfig() {
+        return config;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     public Integer getDeleted() {
         return deleted;
     }
 
     public void setDeleted(Integer deleted) {
         this.deleted = deleted;
-    }
-
-    public String getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(String update) {
-        this.update = update;
     }
 
     @Override
@@ -115,13 +126,14 @@ public class TaskEntity extends BaseEntity<TaskEntity> {
     @Override
     public String toString() {
         return "TaskEntity{" +
-        "action=" + action +
-        ", config=" + config +
-        ", jobId=" + jobId +
+        "jobId=" + jobId +
         ", yarnId=" + yarnId +
         ", flinkId=" + flinkId +
+        ", deployId=" + deployId +
+        ", action=" + action +
+        ", config=" + config +
+        ", info=" + info +
         ", deleted=" + deleted +
-        ", update=" + update +
         "}";
     }
 }
