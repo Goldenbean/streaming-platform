@@ -12,6 +12,7 @@
   <modules>
     <module>streaming-server</module>
     <module>streaming-hadoop</module>
+    <module>streaming-dao</module>
   </modules>
 
   <properties>

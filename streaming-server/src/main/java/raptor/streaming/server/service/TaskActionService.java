@@ -113,7 +113,8 @@ public class TaskActionService {
     FileSystem fileSystem = hadoopClient.getFileSystem();
     String path = fileSystem.getUri().toString();
 
-    String engineDirs=path+"/streaming-platform/flink-cluster/engines/"+clusterName+"/system";
+    String engineDirs =
+        path + "/streaming-platform/flink-cluster/engines/" + clusterName + "/system";
 //    String engineDirs=path+"/streaming-platform/flink-cluster/engines/"+clusterName;
 //    String engineDirs=path+"/streaming-platform/flink-cluster/engines/"+clusterName+"/sql "+path+"/streaming-platform/flink-cluster/engines/"+clusterName+"/system";
 
@@ -122,10 +123,11 @@ public class TaskActionService {
 
       logger.debug("[{}] [{}] [{}]", applicationName, jarPath, args);
 
-      ApplicationDeploy applicationDeploy = new ApplicationDeploy(hadoopConfigPath, hadoopConfigPath);
+      ApplicationDeploy applicationDeploy = new ApplicationDeploy(hadoopConfigPath,
+          hadoopConfigPath);
 
       ClusterClientProvider<ApplicationId> ret =
-          applicationDeploy.deploy(applicationName, jarPath, args, spu,engineDirs);
+          applicationDeploy.deploy(applicationName, jarPath, args, spu, engineDirs);
 
       String appId = ret.getClusterClient().getClusterId().toString();
 

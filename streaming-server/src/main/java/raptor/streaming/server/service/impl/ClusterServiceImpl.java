@@ -35,8 +35,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterDao, ClusterEntity> i
 
   @Override
   public RestResult addCluster(String name, int type,
-      String remark,
-      String spuConf, MultipartFile file) throws IOException {
+      String remark, String spuConf, MultipartFile file) throws IOException {
 
     ClusterEntity cluster = clusterDao.selectOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
 
