@@ -12,9 +12,11 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -30,6 +32,10 @@ public class CodeGenerator {
 
     String projectPath = System.getProperty("user.dir");
 
+    System.out.println(projectPath);
+    File projectFile = new File(projectPath);
+    File projectParentFile = projectFile.getParentFile();
+
     //1、全局配置
     GlobalConfig config = new GlobalConfig();
     config.setActiveRecord(true)//开启AR模式
@@ -40,8 +46,9 @@ public class CodeGenerator {
         .setFileOverride(true)//第二次生成会把第一次生成的覆盖掉
         .setIdType(IdType.AUTO)//主键策略
         .setServiceName("%sService")//生成的service接口名字首字母是否为I，这样设置就没有I
-        .setMapperName("%sDao")
-        .setEntityName("%sEntity")
+        .setMapperName("%sMapper")
+        .setServiceImplName("%sRepository")
+//        .setEntityName("%sEntity")
         .setSwagger2(true)
         .setBaseResultMap(true)//生成resultMap
         .setBaseColumnList(true);//在xml中生成基础列
@@ -68,9 +75,10 @@ public class CodeGenerator {
     //4、包名策略配置
     PackageConfig packageConfig = new PackageConfig();
     packageConfig.setParent("raptor.streaming")//设置包名的parent
-        .setModuleName("server")
-        .setMapper("dao")
-        .setService("service")
+        .setModuleName("dao")
+        .setMapper("mapper")
+//        .setService("service")
+        .setServiceImpl("repository")
         .setController("controller")
         .setEntity("entity");
 
@@ -78,15 +86,15 @@ public class CodeGenerator {
     StrategyConfig strategyConfig = new StrategyConfig();
     strategyConfig.setCapitalMode(true)//开启全局大写命名
         .setNaming(NamingStrategy.underline_to_camel)//下划线到驼峰的命名方式
-        .setTablePrefix("ops_")//表名前缀
+        .setTablePrefix("dev_")//表名前缀
         .setSuperEntityClass("raptor.streaming.dao.entity.BaseEntity")
         .setEntityTableFieldAnnotationEnable(true)
         .setLogicDeleteFieldName("deleted")
-        .setSuperEntityColumns("id", "modifier", "creater", "gmt_create", "gmt_modify", "remark")
+        .setSuperEntityColumns("id", "modifier", "creator", "gmt_create", "gmt_modify", "remark")
         .setEntityLombokModel(false)//使用lombok
         .setRestControllerStyle(true)
         .setInclude(
-            "ops_task"
+            "dev_file_system","dev_job_file"
 //            "dev_file_system"
 //            "dev_job_file"
 //            "dw_source","dw_table"
@@ -102,15 +110,26 @@ public class CodeGenerator {
       }
     };
 
-    // 如果模板引擎是 freemarker
-    String templatePath = "/templates/mapper.xml.vm";
+    // 如果模板引擎是 templates
+    String mapperTemplatePath = "/templates/mapper.xml.vm";
+    String repositoryTemplatePath = "templates/repository.java.vm";
 
     // 自定义输出配置
     List<FileOutConfig> focList = new ArrayList<>();
-    // 自定义配置会被优先输出
-    focList.add(new FileOutConfig(templatePath) {
+
+//     service impl文件输出
+    focList.add(new FileOutConfig(repositoryTemplatePath) {
       @Override
-      public String outputFile(com.baomidou.mybatisplus.generator.config.po.TableInfo tableInfo) {
+      public String outputFile(TableInfo tableInfo) {
+        System.out.println(projectPath);
+        return projectParentFile.getPath() + "/streaming-server/src/main/java/raptor/streaming/server/repository/" + tableInfo.getServiceImplName() + StringPool.DOT_JAVA;
+      }
+    });
+
+    // 自定义配置会被优先输出
+    focList.add(new FileOutConfig(mapperTemplatePath) {
+      @Override
+      public String outputFile(TableInfo tableInfo) {
         // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
         return projectPath + "/src/main/resources/mapper/" + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
       }
@@ -135,7 +154,7 @@ public class CodeGenerator {
     //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
     // templateConfig.setEntity("templates/entity2.java");
 
-    templateConfig.setMapper(null);
+//    templateConfig.setMapper(null);
 //    不重新生成service
     templateConfig.setService(null);
     //    不重新生成serviceImpl

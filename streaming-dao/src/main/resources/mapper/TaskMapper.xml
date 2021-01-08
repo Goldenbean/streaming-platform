@@ -18,6 +18,7 @@
         <result column="config" property="config" />
         <result column="info" property="info" />
         <result column="deleted" property="deleted" />
+        <result column="creater" property="creater" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -28,7 +29,7 @@
         modifier,
         gmt_create,
         gmt_modify,
-        job_id, yarn_id, flink_id, deploy_id, action, config, info, deleted
+        job_id, yarn_id, flink_id, deploy_id, action, config, info, deleted, creater
     </sql>
 
 </mapper>

@@ -1,0 +1,20 @@
+##package ${package.ServiceImpl};
+package raptor.streaming.server.repository;
+
+import ${superServiceClassPackage};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Repository;
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+
+
+@Repository
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${superServiceClass}<${entity}> {
+
+}
+#end

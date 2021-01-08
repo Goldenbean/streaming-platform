@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import raptor.streaming.dao.entity.JobFile;
 import raptor.streaming.dao.mapper.JobFileMapper;
 
+
 @Repository
-public class JobFileRepository extends ServiceImpl<JobFileMapper, JobFile> implements
-    IService<JobFile> {
+public class JobFileRepository extends ServiceImpl<JobFileMapper, JobFile> implements IService<JobFile> {
 
 }

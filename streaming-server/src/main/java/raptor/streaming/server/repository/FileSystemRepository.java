@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import raptor.streaming.dao.entity.FileSystem;
 import raptor.streaming.dao.mapper.FileSystemMapper;
 
+
 @Repository
 public class FileSystemRepository extends ServiceImpl<FileSystemMapper, FileSystem> implements
     IService<FileSystem> {
