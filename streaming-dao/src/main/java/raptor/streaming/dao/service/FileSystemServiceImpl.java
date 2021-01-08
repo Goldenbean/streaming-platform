@@ -1,4 +1,4 @@
-package raptor.streaming.server.repository;
+package raptor.streaming.dao.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.List;

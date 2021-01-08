@@ -30,7 +30,7 @@ import raptor.streaming.common.http.DataResult;
 import raptor.streaming.common.http.RestResult;
 import raptor.streaming.server.service.HadoopService;
 import raptor.streaming.server.service.TaskActionService;
-import raptor.streaming.server.repository.TaskService;
+import raptor.streaming.dao.service.TaskService;
 import raptor.streaming.common.utils.BootUtil;
 
 

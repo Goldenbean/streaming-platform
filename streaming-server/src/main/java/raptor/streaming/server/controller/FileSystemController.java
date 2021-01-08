@@ -19,7 +19,7 @@ import raptor.streaming.dao.entity.FileSystemEntity;
 import raptor.streaming.common.constants.Constant;
 import raptor.streaming.common.http.DataResult;
 import raptor.streaming.common.http.RestResult;
-import raptor.streaming.server.repository.FileSystemService;
+import raptor.streaming.dao.service.FileSystemService;
 
 
 @RestController

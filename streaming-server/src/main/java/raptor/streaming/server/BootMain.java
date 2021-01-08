@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
-@MapperScan("raptor.streaming.server.boot.dao")
+@MapperScan("raptor.streaming.dao")
 @ImportResource(locations = {"classpath*:spring/spring-*.xml"})
 @SpringBootApplication
 public class BootMain {

@@ -27,7 +27,7 @@ import raptor.streaming.common.constants.Constant;
 import raptor.streaming.common.domain.CustomPage;
 import raptor.streaming.common.http.DataResult;
 import raptor.streaming.common.http.RestResult;
-import raptor.streaming.server.repository.ClusterService;
+import raptor.streaming.dao.service.ClusterService;
 import raptor.streaming.server.service.HadoopService;
 
 

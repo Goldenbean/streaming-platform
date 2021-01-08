@@ -1,18 +1,16 @@
-package raptor.streaming.server.repository;
+package raptor.streaming.server.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import raptor.streaming.dao.mapper.ClusterMapper;
-import raptor.streaming.dao.entity.ClusterEntity;
 import raptor.streaming.common.constants.Constant;
 import raptor.streaming.common.http.RestResult;
-import raptor.streaming.server.service.HadoopService;
+import raptor.streaming.dao.entity.ClusterEntity;
+import raptor.streaming.dao.mapper.ClusterMapper;
 
 /**
  * <p>
@@ -23,8 +21,7 @@ import raptor.streaming.server.service.HadoopService;
  * @since 2020-12-02
  */
 @Service
-public class ClusterServiceImpl extends ServiceImpl<ClusterMapper, ClusterEntity> implements
-    ClusterService {
+public class ClusterServiceImpl {
 
   @Autowired
   private ClusterMapper clusterMapper;
@@ -32,8 +29,6 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterMapper, ClusterEntity
   @Autowired
   private HadoopService hadoopService;
 
-
-  @Override
   public RestResult addCluster(String name, int type,
       String remark, String spuConf, MultipartFile file) throws IOException {
 
@@ -64,7 +59,7 @@ public class ClusterServiceImpl extends ServiceImpl<ClusterMapper, ClusterEntity
     return new RestResult(false, 200, "添加集群失败");
   }
 
-  @Override
+
   public RestResult updateCluster(String name, int type,
       String remark,
       String spuConf, MultipartFile file) throws IOException {

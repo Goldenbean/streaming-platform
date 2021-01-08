@@ -1,26 +1,17 @@
-package raptor.streaming.server.repository;
+package raptor.streaming.server.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import raptor.streaming.dao.mapper.TaskMapper;
-import raptor.streaming.dao.entity.Task;
-import raptor.streaming.hadoop.yarn.DeployConfig;
 import raptor.streaming.common.domain.Job;
-import raptor.streaming.server.service.HadoopService;
 import raptor.streaming.common.utils.BootUtil;
+import raptor.streaming.dao.entity.Task;
+import raptor.streaming.dao.mapper.TaskMapper;
+import raptor.streaming.hadoop.yarn.DeployConfig;
 
-/**
- * <p>
- * 任务列表 服务实现类
- * </p>
- *
- * @author azhe
- * @since 2021-01-04
- */
+
 @Service
-public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements TaskService {
+public class TaskService {
 
   @Autowired
   private TaskMapper taskMapper;
@@ -28,7 +19,7 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
   @Autowired
   private HadoopService hadoopService;
 
-  @Override
+
   public Job get(long id) {
 
     Task task = taskMapper.selectById(id);
@@ -41,7 +32,6 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements Ta
   }
 
 
-  @Override
   public Job addOrUpdate(String clusterName, Job job) {
 
 //    JobPO jobPO = new JobPO();

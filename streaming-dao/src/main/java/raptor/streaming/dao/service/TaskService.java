@@ -1,8 +1,7 @@
-package raptor.streaming.server.repository;
+package raptor.streaming.dao.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import raptor.streaming.dao.entity.Task;
-import raptor.streaming.common.domain.Job;
 
 /**
  * <p>
@@ -14,7 +13,4 @@ import raptor.streaming.common.domain.Job;
  */
 public interface TaskService extends IService<Task> {
 
-  public Job addOrUpdate(String clusterName, Job job);
-
-  public Job get(long id);
 }
