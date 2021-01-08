@@ -1,4 +1,4 @@
-package raptor.streaming.server;
+package raptor.streaming.common.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
