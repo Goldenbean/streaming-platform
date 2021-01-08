@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @TableName("dw_source")
 @ApiModel(value = "SourceEntity对象", description = "数据源列表")
-public class SourceEntity extends BaseEntity<SourceEntity> {
+public class Source extends BaseEntity<Source> {
 
   private static final long serialVersionUID = 1L;
 

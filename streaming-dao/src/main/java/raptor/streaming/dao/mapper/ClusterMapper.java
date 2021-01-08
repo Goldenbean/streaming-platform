@@ -1,7 +1,7 @@
 package raptor.streaming.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import raptor.streaming.dao.entity.ClusterEntity;
+import raptor.streaming.dao.entity.Cluster;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.ClusterEntity;
  * @author azhe
  * @since 2020-12-03
  */
-public interface ClusterMapper extends BaseMapper<ClusterEntity> {
+public interface ClusterMapper extends BaseMapper<Cluster> {
 
 }

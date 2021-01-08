@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import raptor.streaming.common.constants.Constant;
-import raptor.streaming.common.http.RestResult;
-import raptor.streaming.dao.entity.ClusterEntity;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.dao.entity.Cluster;
 import raptor.streaming.dao.mapper.ClusterMapper;
 
 /**
@@ -21,7 +21,7 @@ import raptor.streaming.dao.mapper.ClusterMapper;
  * @since 2020-12-02
  */
 @Service
-public class ClusterServiceImpl {
+public class ClusterService {
 
   @Autowired
   private ClusterMapper clusterMapper;
@@ -32,13 +32,13 @@ public class ClusterServiceImpl {
   public RestResult addCluster(String name, int type,
       String remark, String spuConf, MultipartFile file) throws IOException {
 
-    ClusterEntity cluster = clusterMapper
-        .selectOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
+    Cluster cluster = clusterMapper
+        .selectOne(new QueryWrapper<Cluster>().lambda().eq(Cluster::getName, name));
 
     if (cluster != null) {
       return new RestResult(false, 409, "集群已存在");
     }
-    cluster = new ClusterEntity();
+    cluster = new Cluster();
     cluster.setName(name);
     cluster.setType(type);
     setFileToDO(file, cluster);
@@ -63,8 +63,8 @@ public class ClusterServiceImpl {
   public RestResult updateCluster(String name, int type,
       String remark,
       String spuConf, MultipartFile file) throws IOException {
-    ClusterEntity cluster = clusterMapper
-        .selectOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
+    Cluster cluster = clusterMapper
+        .selectOne(new QueryWrapper<Cluster>().lambda().eq(Cluster::getName, name));
     if (cluster == null) {
       return new RestResult(false, 404, "集群不存在");
     }
@@ -79,7 +79,7 @@ public class ClusterServiceImpl {
     return new RestResult(false, 200, "更新集群失败");
   }
 
-  private void setFileToDO(MultipartFile file, ClusterEntity cluster)
+  private void setFileToDO(MultipartFile file, Cluster cluster)
       throws IOException {
     if (file != null) {
       byte[] data = file.getBytes();

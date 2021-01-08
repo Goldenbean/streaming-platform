@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @TableName("sys_project")
 @ApiModel(value = "ProjectEntity对象", description = "")
-public class ProjectEntity extends BaseEntity<ProjectEntity> {
+public class Project extends BaseEntity<Project> {
 
   private static final long serialVersionUID = 1L;
 

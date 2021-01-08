@@ -1,7 +1,7 @@
 package raptor.streaming.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import raptor.streaming.dao.entity.JobFileEntity;
+import raptor.streaming.dao.entity.JobFile;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.JobFileEntity;
  * @author azhe
  * @since 2020-12-25
  */
-public interface JobFileMapper extends BaseMapper<JobFileEntity> {
+public interface JobFileMapper extends BaseMapper<JobFile> {
 
 }

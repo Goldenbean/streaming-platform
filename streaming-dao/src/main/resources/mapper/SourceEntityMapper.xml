@@ -3,7 +3,7 @@
 <mapper namespace="raptor.streaming.dao.mapper.SourceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="raptor.streaming.dao.entity.SourceEntity">
+    <resultMap id="BaseResultMap" type="raptor.streaming.dao.entity.Source">
         <result column="id" property="id" />
         <result column="remark" property="remark" />
         <result column="creator" property="creator" />

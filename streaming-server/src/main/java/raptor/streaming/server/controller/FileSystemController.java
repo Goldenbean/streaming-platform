@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raptor.streaming.dao.entity.FileSystemEntity;
+import raptor.streaming.dao.entity.FileSystem;
 import raptor.streaming.common.constants.Constant;
-import raptor.streaming.common.http.DataResult;
-import raptor.streaming.common.http.RestResult;
-import raptor.streaming.dao.service.FileSystemService;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.server.repository.FileSystemRepository;
 
 
 @RestController
@@ -28,7 +28,7 @@ import raptor.streaming.dao.service.FileSystemService;
 public class FileSystemController {
 
   @Autowired
-  private FileSystemService fileSystemService;
+  private FileSystemRepository fileSystemRepository;
 
 
   @ApiOperation(value = "文件列表")
@@ -42,11 +42,11 @@ public class FileSystemController {
 
   ) {
 
-    List<FileSystemEntity> fileList = fileSystemService.lambdaQuery()
-        .eq(FileSystemEntity::getTabFolder, tabFolder)
-        .eq(FileSystemEntity::getAppKey, appKey)
-        .eq(FileSystemEntity::getParentId, parentId)
-        .orderByAsc(FileSystemEntity::getType)
+    List<FileSystem> fileList = fileSystemRepository.lambdaQuery()
+        .eq(FileSystem::getTabFolder, tabFolder)
+        .eq(FileSystem::getAppKey, appKey)
+        .eq(FileSystem::getParentId, parentId)
+        .orderByAsc(FileSystem::getType)
         .list();
 
     List<Map<String, Object>> list = Lists.newArrayList();
@@ -74,11 +74,11 @@ public class FileSystemController {
 
   ) {
 
-    List<FileSystemEntity> fileList = fileSystemService.lambdaQuery()
-        .eq(FileSystemEntity::getTabFolder, tabFolder)
-        .eq(FileSystemEntity::getAppKey, appKey)
-        .like(FileSystemEntity::getName, searchKey)
-        .orderByAsc(FileSystemEntity::getType)
+    List<FileSystem> fileList = fileSystemRepository.lambdaQuery()
+        .eq(FileSystem::getTabFolder, tabFolder)
+        .eq(FileSystem::getAppKey, appKey)
+        .like(FileSystem::getName, searchKey)
+        .orderByAsc(FileSystem::getType)
         .list();
 
     List<Map<String, Object>> list = Lists.newArrayList();
@@ -96,10 +96,10 @@ public class FileSystemController {
 
   @ApiOperation(value = "添加")
   @PostMapping(value = "/")
-  public RestResult add(@RequestBody FileSystemEntity fileSystemEntity) {
+  public RestResult add(@RequestBody FileSystem fileSystem) {
     try {
-      fileSystemService.saveOrUpdate(fileSystemEntity);
-      return new DataResult<>(fileSystemEntity.getId());
+      fileSystemRepository.saveOrUpdate(fileSystem);
+      return new DataResult<>(fileSystem.getId());
     } catch (Exception e) {
       e.printStackTrace();
       return RestResult.getFailed("添加失败！");
@@ -110,7 +110,7 @@ public class FileSystemController {
   @DeleteMapping(value = "/{name}/")
   public RestResult delete(@PathVariable("name") String name,
       @RequestParam(value = "id", required = true) long id) {
-    if (fileSystemService.removeById(id)) {
+    if (fileSystemRepository.removeById(id)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -120,7 +120,7 @@ public class FileSystemController {
   @ApiOperation(value = "物理删除")
   @DeleteMapping(value = "/remove")
   public RestResult removeByLogicId(@RequestParam(value = "id", required = true) long id) {
-    if (fileSystemService.removeByLogicId(id) > 0) {
+    if (fileSystemRepository.removeByLogicId(id) > 0) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -129,8 +129,8 @@ public class FileSystemController {
 
   @ApiOperation(value = "文件还原")
   @PostMapping(value = "/rollBack")
-  public RestResult rollBack(@RequestBody FileSystemEntity fileSystemEntity) {
-    if (fileSystemService.updateLogicData(fileSystemEntity) > 0) {
+  public RestResult rollBack(@RequestBody FileSystem fileSystem) {
+    if (fileSystemRepository.updateLogicData(fileSystem) > 0) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -139,8 +139,8 @@ public class FileSystemController {
 
 
   @PostMapping(value = "/update")
-  public RestResult update(@RequestBody FileSystemEntity fileSystemEntity) {
-    if (fileSystemService.updateById(fileSystemEntity)) {
+  public RestResult update(@RequestBody FileSystem fileSystem) {
+    if (fileSystemRepository.updateById(fileSystem)) {
       return RestResult.getSuccess();
     }
     return RestResult.getFailed();
@@ -152,7 +152,7 @@ public class FileSystemController {
       @RequestParam(value = "appKey") Integer appKey
 
   ) {
-    List<FileSystemEntity> fileList = fileSystemService.selectLogicDeleted();
+    List<FileSystem> fileList = fileSystemRepository.selectLogicDeleted();
     List<Map<String, Object>> list = Lists.newArrayList();
     fileList.forEach(file -> {
       boolean isLeaf = !file.getType().equals("dir");
@@ -165,7 +165,7 @@ public class FileSystemController {
   }
 
 
-  public Map<String, Object> parseFile(FileSystemEntity file, boolean isLeaf) {
+  public Map<String, Object> parseFile(FileSystem file, boolean isLeaf) {
     Map<String, Object> map = Maps.newHashMap();
     map.put("key", file.getId());
     map.put("title", file.getName());

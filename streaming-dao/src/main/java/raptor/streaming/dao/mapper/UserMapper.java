@@ -1,7 +1,7 @@
 package raptor.streaming.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import raptor.streaming.dao.entity.UserEntity;
+import raptor.streaming.dao.entity.User;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.UserEntity;
  * @author azhe
  * @since 2020-12-04
  */
-public interface UserMapper extends BaseMapper<UserEntity> {
+public interface UserMapper extends BaseMapper<User> {
 
 }

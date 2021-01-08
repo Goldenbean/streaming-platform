@@ -21,7 +21,6 @@ import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.yarn.ApplicationDeploy;
 import raptor.streaming.hadoop.yarn.DeployConfig;
 import raptor.streaming.common.domain.Job;
-import raptor.streaming.dao.service.TaskService;
 
 
 @Service

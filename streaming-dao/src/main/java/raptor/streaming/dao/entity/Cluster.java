@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @TableName("sys_cluster")
 @ApiModel(value = "ClusterEntity对象", description = "集群列表")
-public class ClusterEntity extends BaseEntity<ClusterEntity> {
+public class Cluster extends BaseEntity<Cluster> {
 
   private static final long serialVersionUID = 1L;
 

@@ -24,7 +24,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import raptor.streaming.dao.mapper.ClusterMapper;
-import raptor.streaming.dao.entity.ClusterEntity;
+import raptor.streaming.dao.entity.Cluster;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.FilePO;
 import raptor.streaming.hadoop.bean.YarnAppPO;
@@ -49,8 +49,8 @@ public class HadoopService {
   @PostConstruct
   private void init() throws Exception {
 
-    final List<ClusterEntity> clusterEntities = clusterMapper
-        .selectList(Wrappers.<ClusterEntity>query().eq("type", 1));
+    final List<Cluster> clusterEntities = clusterMapper
+        .selectList(Wrappers.<Cluster>query().eq("type", 1));
 
     File configDir = new File(configDirPath);
 
@@ -58,7 +58,7 @@ public class HadoopService {
       FileUtils.forceMkdir(configDir);
     }
 
-    for (ClusterEntity cluster : clusterEntities) {
+    for (Cluster cluster : clusterEntities) {
       String clusterConfigDirPath = configDirPath + File.separator + cluster.getName();
 
       File clusterConfigDir = new File(clusterConfigDirPath);
@@ -70,7 +70,7 @@ public class HadoopService {
     }
   }
 
-  public void addCluster(ClusterEntity cluster) throws IOException {
+  public void addCluster(Cluster cluster) throws IOException {
     String latestConfigDir = initClusterConfigDir(cluster);
     if (latestConfigDir != null) {
       logger.info("init: hadoop conf [{}]", latestConfigDir);
@@ -90,7 +90,7 @@ public class HadoopService {
     logger.info("destroyCluster , ok");
   }
 
-  private void updateClusterConfig(ClusterEntity cluster, String clusterConfigDirPath)
+  private void updateClusterConfig(Cluster cluster, String clusterConfigDirPath)
       throws IOException {
     File clusterConfigDir = new File(clusterConfigDirPath);
     File[] files = clusterConfigDir.listFiles(new FilenameFilter() {
@@ -113,7 +113,7 @@ public class HadoopService {
 
   }
 
-  private String initClusterConfigDir(ClusterEntity cluster) throws IOException {
+  private String initClusterConfigDir(Cluster cluster) throws IOException {
 
     String clusterConfigDirPath = configDirPath + File.separator + cluster.getName();
 
@@ -141,7 +141,7 @@ public class HadoopService {
   }
 
 
-  private Boolean downloadConfig(ClusterEntity cluster, String downloadDir) throws IOException {
+  private Boolean downloadConfig(Cluster cluster, String downloadDir) throws IOException {
 
     byte[] data = cluster.getConfigFile();
     String configFileMD5 = cluster.getConfigFileMd5();

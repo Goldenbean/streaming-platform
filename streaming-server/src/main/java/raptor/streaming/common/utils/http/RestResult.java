@@ -1,4 +1,4 @@
-package raptor.streaming.common.http;
+package raptor.streaming.common.utils.http;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

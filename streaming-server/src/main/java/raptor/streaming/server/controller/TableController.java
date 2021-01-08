@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raptor.streaming.dao.entity.TableEntity;
-import raptor.streaming.dao.service.TableService;
+import raptor.streaming.dao.entity.Table;
 import raptor.streaming.common.constants.Constant;
 import raptor.streaming.common.domain.CustomPage;
-import raptor.streaming.common.http.DataResult;
-import raptor.streaming.common.http.RestResult;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.server.repository.TableRepository;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ import raptor.streaming.common.http.RestResult;
 public class TableController {
 
   @Autowired
-  private TableService tableService;
+  private TableRepository tableRepository;
 
 
   @ApiOperation(value = "分页获取数仓列表")
@@ -44,15 +44,15 @@ public class TableController {
       @RequestParam(value = "appKey") Integer appKey
 
   ) {
-    Page<TableEntity> page = tableService.lambdaQuery().eq(TableEntity::getType, type)
-        .eq(TableEntity::getAppKey, appKey).page(new Page<>(curPage, pageSize));
+    Page<Table> page = tableRepository.lambdaQuery().eq(Table::getType, type)
+        .eq(Table::getAppKey, appKey).page(new Page<>(curPage, pageSize));
     return new DataResult<>(new CustomPage(page));
   }
 
   @ApiOperation(value = "添加用户")
   @PostMapping(value = "/")
-  public RestResult add(@RequestBody TableEntity tableEntity) {
-    if (tableService.save(tableEntity)) {
+  public RestResult add(@RequestBody Table table) {
+    if (tableRepository.save(table)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -62,7 +62,7 @@ public class TableController {
   @DeleteMapping(value = "/{name}/")
   public RestResult delete(@PathVariable("name") String name,
       @RequestParam(value = "id", required = true) long id) {
-    if (tableService.removeById(id)) {
+    if (tableRepository.removeById(id)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -70,8 +70,8 @@ public class TableController {
   }
 
   @PostMapping(value = "/update")
-  public RestResult update(@RequestBody TableEntity tableEntity) {
-    if (tableService.updateById(tableEntity)) {
+  public RestResult update(@RequestBody Table table) {
+    if (tableRepository.updateById(table)) {
       return RestResult.getSuccess();
     }
     return RestResult.getFailed();

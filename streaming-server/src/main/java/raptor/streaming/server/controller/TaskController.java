@@ -21,17 +21,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raptor.streaming.dao.entity.Task;
-import raptor.streaming.hadoop.yarn.DeployConfig;
 import raptor.streaming.common.constants.Constant;
 import raptor.streaming.common.domain.CustomPage;
 import raptor.streaming.common.domain.Job;
-import raptor.streaming.common.http.DataResult;
-import raptor.streaming.common.http.RestResult;
+import raptor.streaming.common.utils.BootUtil;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.dao.entity.Task;
+import raptor.streaming.hadoop.yarn.DeployConfig;
+import raptor.streaming.server.repository.TaskRepository;
 import raptor.streaming.server.service.HadoopService;
 import raptor.streaming.server.service.TaskActionService;
-import raptor.streaming.dao.service.TaskService;
-import raptor.streaming.common.utils.BootUtil;
+import raptor.streaming.server.service.TaskService;
 
 
 @RestController
@@ -43,6 +44,9 @@ public class TaskController {
 
   @Autowired
   private TaskService taskService;
+
+  @Autowired
+  private TaskRepository taskRepository;
 
   @Autowired
   private HadoopService hadoopService;
@@ -86,7 +90,7 @@ public class TaskController {
       ) Integer pageSize
   ) {
 
-    Page<Task> page = taskService.page(new Page<>(curPage, pageSize));
+    Page<Task> page = taskRepository.page(new Page<>(curPage, pageSize));
 
     List<Job> collect = page.getRecords().stream()
         .map(obj -> toJob(clusterName, obj))
@@ -117,7 +121,7 @@ public class TaskController {
   @ApiOperation(value = "保存任务")
   @PostMapping(value = "/save")
   public RestResult save(@RequestBody Task task) {
-    if (taskService.saveOrUpdate(task)) {
+    if (taskRepository.saveOrUpdate(task)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -169,7 +173,7 @@ public class TaskController {
     String config = BootUtil.toJson(job);
     final Task task = new Task();
     task.setConfig(config);
-    if (taskService.save(task)) {
+    if (taskRepository.save(task)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -179,7 +183,7 @@ public class TaskController {
   @DeleteMapping(value = "/{name}/")
   public RestResult delete(@PathVariable("name") String name,
       @RequestParam(value = "id", required = true) long id) {
-    if (taskService.removeById(id)) {
+    if (taskRepository.removeById(id)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();

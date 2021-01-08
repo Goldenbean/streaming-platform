@@ -1,7 +1,7 @@
 package raptor.streaming.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import raptor.streaming.dao.entity.SourceEntity;
+import raptor.streaming.dao.entity.Source;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.SourceEntity;
  * @author azhe
  * @since 2020-12-08
  */
-public interface SourceMapper extends BaseMapper<SourceEntity> {
+public interface SourceMapper extends BaseMapper<Source> {
 
 }

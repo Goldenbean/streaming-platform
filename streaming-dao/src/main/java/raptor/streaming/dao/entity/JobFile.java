@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @TableName("dev_job_file")
 @ApiModel(value = "JobFileEntity对象", description = "作业文件表")
-public class JobFileEntity extends BaseEntity<JobFileEntity> {
+public class JobFile extends BaseEntity<JobFile> {
 
   private static final long serialVersionUID = 1L;
 

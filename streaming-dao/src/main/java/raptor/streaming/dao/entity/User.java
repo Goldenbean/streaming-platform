@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @TableName("sys_user")
 @ApiModel(value = "UserEntity对象", description = "")
-public class UserEntity extends BaseEntity<UserEntity> {
+public class User extends BaseEntity<User> {
 
   private static final long serialVersionUID = 1L;
 

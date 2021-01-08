@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raptor.streaming.dao.entity.JobFileEntity;
-import raptor.streaming.dao.service.JobFileService;
+import raptor.streaming.dao.entity.JobFile;
 import raptor.streaming.common.constants.Constant;
-import raptor.streaming.common.http.DataResult;
-import raptor.streaming.common.http.RestResult;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.server.repository.JobFileRepository;
 
 /**
  * <p>
@@ -32,18 +32,18 @@ import raptor.streaming.common.http.RestResult;
 public class JobFileController {
 
   @Autowired
-  private JobFileService jobFileService;
+  private JobFileRepository jobFileRepository;
 
   @ApiOperation(value = "获取作业文件")
   @GetMapping(value = "/get")
   public RestResult get(
       @RequestParam(value = "fileId") Integer fileId) {
 
-    JobFileEntity jobFileEntity = jobFileService
-        .getOne(new QueryWrapper<JobFileEntity>().lambda().eq(JobFileEntity::getFileId, fileId));
+    JobFile jobFile = jobFileRepository
+        .getOne(new QueryWrapper<JobFile>().lambda().eq(JobFile::getFileId, fileId));
 
-    if (jobFileEntity != null) {
-      return new DataResult<>(jobFileEntity);
+    if (jobFile != null) {
+      return new DataResult<>(jobFile);
     } else {
       return RestResult.getFailed();
     }
@@ -51,9 +51,9 @@ public class JobFileController {
 
   @ApiOperation(value = "保存作业文件")
   @PostMapping(value = "/save")
-  public RestResult save(@RequestBody JobFileEntity jobFileEntity) {
-    if (jobFileService.saveOrUpdate(jobFileEntity, Wrappers.<JobFileEntity>lambdaUpdate()
-        .eq(JobFileEntity::getFileId, jobFileEntity.getFileId()))) {
+  public RestResult save(@RequestBody JobFile jobFile) {
+    if (jobFileRepository.saveOrUpdate(jobFile, Wrappers.<JobFile>lambdaUpdate()
+        .eq(JobFile::getFileId, jobFile.getFileId()))) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -63,7 +63,7 @@ public class JobFileController {
   @DeleteMapping(value = "/{name}/")
   public RestResult delete(@PathVariable("name") String name,
       @RequestParam(value = "id", required = true) long id) {
-    if (jobFileService.removeById(id)) {
+    if (jobFileRepository.removeById(id)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -71,8 +71,8 @@ public class JobFileController {
   }
 
   @PostMapping(value = "/update")
-  public RestResult update(@RequestBody JobFileEntity jobFileEntity) {
-    if (jobFileService.updateById(jobFileEntity)) {
+  public RestResult update(@RequestBody JobFile jobFile) {
+    if (jobFileRepository.updateById(jobFile)) {
       return RestResult.getSuccess();
     }
     return RestResult.getFailed();

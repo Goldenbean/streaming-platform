@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @TableName("dev_file_system")
 @ApiModel(value = "FileSystemEntity对象", description = "资源管理")
-public class FileSystemEntity extends BaseEntity<FileSystemEntity> {
+public class FileSystem extends BaseEntity<FileSystem> {
 
   private static final long serialVersionUID = 1L;
 

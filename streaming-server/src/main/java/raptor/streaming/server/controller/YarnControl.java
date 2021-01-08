@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raptor.streaming.hadoop.bean.YarnAppPO;
 import raptor.streaming.common.constants.Constant;
-import raptor.streaming.common.http.DataResult;
-import raptor.streaming.common.http.RestResult;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
 import raptor.streaming.server.service.HadoopService;
 
 @RestController

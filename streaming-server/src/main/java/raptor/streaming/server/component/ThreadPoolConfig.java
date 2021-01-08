@@ -6,12 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-/**
- * Created by azhe on 2020-11-26 17:25
- */
+
 @Configuration
 @EnableAsync
-public class ThreadPoolTaskConfig {
+public class ThreadPoolConfig {
 
   private static final int corePoolSize = 4;          // 核心线程数（默认线程数）
   private static final int maxPoolSize = 10;          // 最大线程数
