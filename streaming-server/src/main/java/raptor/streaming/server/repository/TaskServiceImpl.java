@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import raptor.streaming.dao.mapper.TaskMapper;
-import raptor.streaming.dao.entity.TaskEntity;
+import raptor.streaming.dao.entity.Task;
 import raptor.streaming.hadoop.yarn.DeployConfig;
 import raptor.streaming.common.domain.Job;
 import raptor.streaming.server.service.HadoopService;
@@ -20,7 +20,7 @@ import raptor.streaming.common.utils.BootUtil;
  * @since 2021-01-04
  */
 @Service
-public class TaskServiceImpl extends ServiceImpl<TaskMapper, TaskEntity> implements TaskService {
+public class TaskServiceImpl extends ServiceImpl<TaskMapper, Task> implements TaskService {
 
   @Autowired
   private TaskMapper taskMapper;
@@ -31,10 +31,10 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, TaskEntity> impleme
   @Override
   public Job get(long id) {
 
-    TaskEntity taskEntity = taskMapper.selectById(id);
+    Task task = taskMapper.selectById(id);
 
-    if (taskEntity != null) {
-      return toJob(taskEntity);
+    if (task != null) {
+      return toJob(task);
     }
 
     return null;
@@ -46,31 +46,31 @@ public class TaskServiceImpl extends ServiceImpl<TaskMapper, TaskEntity> impleme
 
 //    JobPO jobPO = new JobPO();
 
-    TaskEntity taskEntity = new TaskEntity();
+    Task task = new Task();
 
     if (job.getDeployConfig() == null) {
       job.setDeployConfig(new DeployConfig());
     }
 
-    taskEntity.setConfig(BootUtil.toJson(job));
+    task.setConfig(BootUtil.toJson(job));
 
     if (job.getId() > 0) {
       if (get(job.getId()) != null) {
-        taskEntity.setId(job.getId());
-        taskMapper.updateById(taskEntity);
-        return get(taskEntity.getId());
+        task.setId(job.getId());
+        taskMapper.updateById(task);
+        return get(task.getId());
       }
     }
 
-    taskEntity.insert();
-    return get(taskEntity.getId());
+    task.insert();
+    return get(task.getId());
   }
 
 
-  private Job toJob(TaskEntity taskEntity) {
-    Job job = JSONObject.parseObject(taskEntity.getConfig(), Job.class);
+  private Job toJob(Task task) {
+    Job job = JSONObject.parseObject(task.getConfig(), Job.class);
     String clusterName = job.getDeployConfig().getClusterName();
-    job.setId(taskEntity.getId());
+    job.setId(task.getId());
     job.setYarnStatus(hadoopService.getYarnState(clusterName, job.getYarnId()));
     return job;
   }

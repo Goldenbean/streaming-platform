@@ -15,7 +15,7 @@ import raptor.streaming.dao.entity.FileSystemEntity;
  * @author azhe
  * @since 2020-12-16
  */
-public interface FileSystemDao extends BaseMapper<FileSystemEntity> {
+public interface FileSystemMapper extends BaseMapper<FileSystemEntity> {
 
   @Select("select * from dev_file_system where deleted=1")
   List<FileSystemEntity> selectLogicDeleted();

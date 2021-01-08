@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @TableName("ops_task")
 @ApiModel(value = "TaskEntity对象", description = "任务列表")
-public class TaskEntity extends BaseEntity<TaskEntity> {
+public class Task extends BaseEntity<Task> {
 
   private static final long serialVersionUID = 1L;
 

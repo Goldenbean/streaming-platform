@@ -1,7 +1,7 @@
 package raptor.streaming.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import raptor.streaming.dao.entity.TaskEntity;
+import raptor.streaming.dao.entity.Task;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.TaskEntity;
  * @author azhe
  * @since 2021-01-04
  */
-public interface TaskMapper extends BaseMapper<TaskEntity> {
+public interface TaskMapper extends BaseMapper<Task> {
 
 }

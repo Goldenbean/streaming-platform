@@ -1,7 +1,3 @@
-/**
- * projectName: mybatis-plus fileName: BaseEntity.java packageName: com.fendo.mybatis.plus.common.persistent
- * date: 2018-03-24 18:12 copyright(c) 2017-2020 xxx公司
- */
 package raptor.streaming.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -13,9 +9,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
-@Data
+
 public class BaseEntity<T extends Model> extends Model {
 
   /**
@@ -23,7 +18,7 @@ public class BaseEntity<T extends Model> extends Model {
    */
   @TableId(value = "ID", type = IdType.AUTO)
   @ApiModelProperty("主键")
-  private long id;
+  private Long id;
 
   /**
    * 创建者
@@ -73,7 +68,7 @@ public class BaseEntity<T extends Model> extends Model {
     return this.id;
   }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 

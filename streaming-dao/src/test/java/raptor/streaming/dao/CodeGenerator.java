@@ -1,4 +1,4 @@
-package raptor.streaming.server;
+package raptor.streaming.dao;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raptor.streaming.dao.entity.TaskEntity;
+import raptor.streaming.dao.entity.Task;
 import raptor.streaming.hadoop.yarn.DeployConfig;
 import raptor.streaming.common.constants.Constant;
 import raptor.streaming.common.domain.CustomPage;
@@ -86,7 +86,7 @@ public class TaskController {
       ) Integer pageSize
   ) {
 
-    Page<TaskEntity> page = taskService.page(new Page<>(curPage, pageSize));
+    Page<Task> page = taskService.page(new Page<>(curPage, pageSize));
 
     List<Job> collect = page.getRecords().stream()
         .map(obj -> toJob(clusterName, obj))
@@ -116,8 +116,8 @@ public class TaskController {
 
   @ApiOperation(value = "保存任务")
   @PostMapping(value = "/save")
-  public RestResult save(@RequestBody TaskEntity taskEntity) {
-    if (taskService.saveOrUpdate(taskEntity)) {
+  public RestResult save(@RequestBody Task task) {
+    if (taskService.saveOrUpdate(task)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -167,9 +167,9 @@ public class TaskController {
     job.setDeployConfig(deployConfig);
 
     String config = BootUtil.toJson(job);
-    final TaskEntity taskEntity = new TaskEntity();
-    taskEntity.setConfig(config);
-    if (taskService.save(taskEntity)) {
+    final Task task = new Task();
+    task.setConfig(config);
+    if (taskService.save(task)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -201,9 +201,9 @@ public class TaskController {
     }
   }
 
-  private Job toJob(String clusterName, TaskEntity taskEntity) {
-    Job job = JSONObject.parseObject(taskEntity.getConfig(), Job.class);
-    job.setId(taskEntity.getId());
+  private Job toJob(String clusterName, Task task) {
+    Job job = JSONObject.parseObject(task.getConfig(), Job.class);
+    job.setId(task.getId());
     job.setYarnStatus(hadoopService.getYarnState(clusterName, job.getYarnId()));
     return job;
   }

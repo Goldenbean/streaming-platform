@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.JobFileEntity;
  * @author azhe
  * @since 2020-12-25
  */
-public interface JobFileDao extends BaseMapper<JobFileEntity> {
+public interface JobFileMapper extends BaseMapper<JobFileEntity> {
 
 }
