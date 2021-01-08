@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.TableEntity;
  * @author azhe
  * @since 2020-12-08
  */
-public interface TableDao extends BaseMapper<TableEntity> {
+public interface TableMapper extends BaseMapper<TableEntity> {
 
 }

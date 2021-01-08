@@ -2,7 +2,7 @@ package raptor.streaming.dao.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import raptor.streaming.dao.mapper.UserDao;
+import raptor.streaming.dao.mapper.UserMapper;
 import raptor.streaming.dao.entity.UserEntity;
 
 /**
@@ -14,6 +14,6 @@ import raptor.streaming.dao.entity.UserEntity;
  * @since 2020-12-04
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
 
 }

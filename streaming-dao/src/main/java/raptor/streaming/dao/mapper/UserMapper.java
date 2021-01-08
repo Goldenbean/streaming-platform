@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.UserEntity;
  * @author azhe
  * @since 2020-12-04
  */
-public interface UserDao extends BaseMapper<UserEntity> {
+public interface UserMapper extends BaseMapper<UserEntity> {
 
 }

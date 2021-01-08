@@ -11,6 +11,6 @@ import raptor.streaming.dao.entity.SourceEntity;
  * @author azhe
  * @since 2020-12-08
  */
-public interface SourceDao extends BaseMapper<SourceEntity> {
+public interface SourceMapper extends BaseMapper<SourceEntity> {
 
 }
