@@ -12,29 +12,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.entity.CustomPage;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.entity.SourceEntity;
-import raptor.streaming.server.entity.TableEntity;
-import raptor.streaming.server.service.SourceService;
-import raptor.streaming.server.service.TableService;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.domain.CustomPage;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.dao.entity.Table;
+import raptor.streaming.server.repository.TableRepository;
 
 /**
  * <p>
  * 数仓管理 前端控制器
  * </p>
  *
- * @author azhe
- * Created by azhe on 2020-12-07 17:27
+ * @author azhe Created by azhe on 2020-12-07 17:27
  */
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/table")
 @Api(tags = "数仓管理")
 public class TableController {
+
   @Autowired
-  private TableService tableService;
+  private TableRepository tableRepository;
 
 
   @ApiOperation(value = "分页获取数仓列表")
@@ -45,34 +43,35 @@ public class TableController {
       @RequestParam(value = "type") Integer type,
       @RequestParam(value = "appKey") Integer appKey
 
-
   ) {
-    Page<TableEntity> page = tableService.lambdaQuery().eq(TableEntity::getType, type).eq(TableEntity::getAppKey,appKey).page(new Page<>(curPage, pageSize));
+    Page<Table> page = tableRepository.lambdaQuery().eq(Table::getType, type)
+        .eq(Table::getAppKey, appKey).page(new Page<>(curPage, pageSize));
     return new DataResult<>(new CustomPage(page));
   }
 
   @ApiOperation(value = "添加用户")
   @PostMapping(value = "/")
-  public RestResult add( @RequestBody TableEntity tableEntity) {
-    if(tableService.save(tableEntity)){
-      return  RestResult.getSuccess();
-    }else{
-      return  RestResult.getFailed();
+  public RestResult add(@RequestBody Table table) {
+    if (tableRepository.save(table)) {
+      return RestResult.getSuccess();
+    } else {
+      return RestResult.getFailed();
     }
   }
 
   @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
-    if (tableService.removeById(id)) {
+  public RestResult delete(@PathVariable("name") String name,
+      @RequestParam(value = "id", required = true) long id) {
+    if (tableRepository.removeById(id)) {
       return RestResult.getSuccess();
-    }else {
+    } else {
       return RestResult.getFailed();
     }
   }
 
   @PostMapping(value = "/update")
-  public RestResult update(@RequestBody TableEntity tableEntity) {
-    if (tableService.updateById(tableEntity)){
+  public RestResult update(@RequestBody Table table) {
+    if (tableRepository.updateById(table)) {
       return RestResult.getSuccess();
     }
     return RestResult.getFailed();

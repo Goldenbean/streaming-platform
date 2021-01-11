@@ -21,37 +21,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.domain.CustomPage;
+import raptor.streaming.common.domain.Job;
+import raptor.streaming.common.utils.BootUtil;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.dao.entity.Task;
 import raptor.streaming.hadoop.yarn.DeployConfig;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.entity.CustomPage;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.Job;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.entity.TaskEntity;
+import raptor.streaming.server.repository.TaskRepository;
 import raptor.streaming.server.service.HadoopService;
 import raptor.streaming.server.service.TaskActionService;
 import raptor.streaming.server.service.TaskService;
-import raptor.streaming.server.utils.BootUtil;
 
-/**
- * <p>
- * 前端控制器
- * </p>
- *
- * @author azhe
- * @since 2020-12-03
- */
+
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/task")
 @Api(tags = "任务管理")
-
 public class TaskController {
 
   private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
-
   @Autowired
   private TaskService taskService;
+
+  @Autowired
+  private TaskRepository taskRepository;
 
   @Autowired
   private HadoopService hadoopService;
@@ -95,7 +90,7 @@ public class TaskController {
       ) Integer pageSize
   ) {
 
-    Page<TaskEntity> page = taskService.page(new Page<>(curPage, pageSize));
+    Page<Task> page = taskRepository.page(new Page<>(curPage, pageSize));
 
     List<Job> collect = page.getRecords().stream()
         .map(obj -> toJob(clusterName, obj))
@@ -125,8 +120,8 @@ public class TaskController {
 
   @ApiOperation(value = "保存任务")
   @PostMapping(value = "/save")
-  public RestResult save(@RequestBody TaskEntity taskEntity) {
-    if (taskService.saveOrUpdate(taskEntity)) {
+  public RestResult save(@RequestBody Task task) {
+    if (taskRepository.saveOrUpdate(task)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -142,7 +137,8 @@ public class TaskController {
       @RequestParam(value = "content") String content
   ) {
 
-    Stream<String> stringStream = Arrays.stream(content.split("\n")).filter(line -> line.contains("=") && !line.startsWith("--"));
+    Stream<String> stringStream = Arrays.stream(content.split("\n"))
+        .filter(line -> line.contains("=") && !line.startsWith("--"));
 
     DeployConfig deployConfig = new DeployConfig();
 
@@ -175,9 +171,9 @@ public class TaskController {
     job.setDeployConfig(deployConfig);
 
     String config = BootUtil.toJson(job);
-    final TaskEntity taskEntity = new TaskEntity();
-    taskEntity.setConfig(config);
-    if (taskService.save(taskEntity)) {
+    final Task task = new Task();
+    task.setConfig(config);
+    if (taskRepository.save(task)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -185,8 +181,9 @@ public class TaskController {
   }
 
   @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
-    if (taskService.removeById(id)) {
+  public RestResult delete(@PathVariable("name") String name,
+      @RequestParam(value = "id", required = true) long id) {
+    if (taskRepository.removeById(id)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();
@@ -208,9 +205,9 @@ public class TaskController {
     }
   }
 
-  private Job toJob(String clusterName, TaskEntity taskEntity) {
-    Job job = JSONObject.parseObject(taskEntity.getConfig(), Job.class);
-    job.setId(taskEntity.getId());
+  private Job toJob(String clusterName, Task task) {
+    Job job = JSONObject.parseObject(task.getConfig(), Job.class);
+    job.setId(task.getId());
     job.setYarnStatus(hadoopService.getYarnState(clusterName, job.getYarnId()));
     return job;
   }

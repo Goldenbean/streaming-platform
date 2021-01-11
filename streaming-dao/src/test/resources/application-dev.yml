@@ -1,0 +1,77 @@
+server:
+  port: 8080
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://stream-2:3306/streaming?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      max-lifetime: 15
+      idle-timeout: 30000
+      auto-commit: true
+      pool-name: DatebookHikariCP
+      connection-timeout: 3000
+      connection-test-query: select 1
+
+#  jackson:
+#    time-zone: GMT+8
+#    date-format: yyyy-MM-dd HH:mm:ss
+
+
+# Mybatis-Plus 配置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: raptor.streaming.server.entity
+  #  typeEnumsPackage: com.fendo.mybatis.plus.entity.enums
+  global-config:
+    id-type: 3  #0:数据库ID自增   1:用户输入id  2:全局唯一id(IdWorker)  3:全局唯一ID(uuid)
+    db-column-underline: false
+    refresh-mapper: true
+
+    #    meta-object-handler: com.fendo.mybatis.plus.common.mybatis.MetaObjectHandlerExtend
+    #逻辑删除配置
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+  #    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+  configuration:
+    map-underscore-to-camel-case: true
+    #    cache-enabled: true #配置的缓存的全局开关
+    lazyLoadingEnabled: true #延时加载的开关
+    multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+    #    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+
+streaming:
+  conf=: ./config
+
+hadoop:
+  user:
+    name: admin
+
+##配置日志
+#logging:
+#  level:
+#    org.springframework.web: "debug"
+#    org.hibernate: "error"
+log:
+  path: ./logs
+
+
+logging:
+  file:
+    max-size: 10MB
+    max-history: 7
+    path: logs
+  #配置日志文件路径 不同目录下的日志可配置不同级别
+#  level:
+#    raptor.streaming.server.dao: info
+#    raptor.streaming.server.service: info

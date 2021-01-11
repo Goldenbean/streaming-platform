@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="raptor.streaming.dao.mapper.FileSystemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="raptor.streaming.dao.entity.FileSystem">
+        <result column="id" property="id" />
+        <result column="remark" property="remark" />
+        <result column="creator" property="creator" />
+        <result column="modifier" property="modifier" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modify" property="gmtModify" />
+        <result column="name" property="name" />
+        <result column="app_key" property="appKey" />
+        <result column="parent_id" property="parentId" />
+        <result column="tab_folder" property="tabFolder" />
+        <result column="parent_path" property="parentPath" />
+        <result column="file_path" property="filePath" />
+        <result column="deleted" property="deleted" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        remark,
+        creator,
+        modifier,
+        gmt_create,
+        gmt_modify,
+        name, app_key, parent_id, tab_folder, parent_path, file_path, deleted, type
+    </sql>
+
+</mapper>

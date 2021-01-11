@@ -16,29 +16,22 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.domain.CustomPage;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.dao.entity.Cluster;
 import raptor.streaming.hadoop.HadoopClient;
 import raptor.streaming.hadoop.bean.YarnClusterPO;
-import raptor.streaming.server.common.entity.CustomPage;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.entity.ClusterEntity;
+import raptor.streaming.server.repository.ClusterRepository;
 import raptor.streaming.server.service.ClusterService;
 import raptor.streaming.server.service.HadoopService;
 
-/**
- * <p>
- * 集群列表 前端控制器
- * </p>
- *
- * @author azhe
- * @since 2020-12-02
- */
+
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/cluster")
 @Api(tags = "集群管理")
@@ -50,6 +43,9 @@ public class ClusterController {
   private ClusterService clusterService;
 
   @Autowired
+  private ClusterRepository clusterRepository;
+
+  @Autowired
   private HadoopService hadoopService;
 
   @ApiOperation(value = "分页获取集群列表")
@@ -58,7 +54,7 @@ public class ClusterController {
       @RequestParam(value = "curPage", required = false, defaultValue = "1") Integer curPage,
       @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize
   ) {
-    Page<ClusterEntity> page = clusterService.page(new Page<>(curPage, pageSize));
+    Page<Cluster> page = clusterRepository.page(new Page<>(curPage, pageSize));
     return new DataResult<>(new CustomPage(page));
   }
 
@@ -97,9 +93,10 @@ public class ClusterController {
 
 
   @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
+  public RestResult delete(@PathVariable("name") String name,
+      @RequestParam(value = "id", required = true) long id) {
 
-    if (clusterService.removeById(id)) {
+    if (clusterRepository.removeById(id)) {
       String localConfigPath = Constant.CONFIG_DIR_BASE + File.separator + name;
       File localConfigDir = new File(localConfigPath);
       String hdfsConfigPath = Constant.STREAM_ENGINES_BASE_DIR + File.separator + name;
@@ -118,7 +115,8 @@ public class ClusterController {
 
   @GetMapping(value = "/{name}/basic")
   public RestResult getBasic(@PathVariable("name") String name) {
-    ClusterEntity cluster = clusterService.getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
+    Cluster cluster = clusterRepository
+        .getOne(new QueryWrapper<Cluster>().lambda().eq(Cluster::getName, name));
     if (cluster == null) {
       return new RestResult(true, 404, "集群不存在");
     }
@@ -128,7 +126,8 @@ public class ClusterController {
 
   @GetMapping(value = "/{name}/metrics")
   public RestResult getOverview(@PathVariable("name") String name) {
-    ClusterEntity cluster = clusterService.getOne(new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
+    Cluster cluster = clusterRepository
+        .getOne(new QueryWrapper<Cluster>().lambda().eq(Cluster::getName, name));
     if (cluster == null) {
       return new RestResult(true, 404, "集群不存在");
     }
@@ -145,7 +144,8 @@ public class ClusterController {
         cluster.setTotalCores(yarnOverview.getCoresTotal());
         cluster.setTotalMemory((double) Math.round(yarnOverview.getMemTotal() / 1024 * 100) / 100);
         cluster.setTotalNodes(yarnOverview.getNodeList().size());
-        clusterService.update(cluster, new QueryWrapper<ClusterEntity>().lambda().eq(ClusterEntity::getName, name));
+        clusterRepository.update(cluster,
+            new QueryWrapper<Cluster>().lambda().eq(Cluster::getName, name));
       }
       return new DataResult<>(yarnOverview);
     } catch (Exception e) {

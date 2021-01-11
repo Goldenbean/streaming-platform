@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.common.entity.Tuple2;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.utils.BootUtil;
+import raptor.streaming.common.utils.Tuple2;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
 import raptor.streaming.server.service.HadoopService;
-import raptor.streaming.server.utils.BootUtil;
 
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/jars/engines")

@@ -13,28 +13,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raptor.streaming.server.common.constants.Constant;
-import raptor.streaming.server.common.entity.CustomPage;
-import raptor.streaming.server.common.entity.DataResult;
-import raptor.streaming.server.common.entity.RestResult;
-import raptor.streaming.server.entity.UserEntity;
-import raptor.streaming.server.service.UserService;
+import raptor.streaming.common.constants.Constant;
+import raptor.streaming.common.domain.CustomPage;
+import raptor.streaming.common.utils.http.DataResult;
+import raptor.streaming.common.utils.http.RestResult;
+import raptor.streaming.dao.entity.User;
+import raptor.streaming.server.repository.UserRepository;
 
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author azhe
- * @since 2020-12-02
- */
+
 @RestController
 @RequestMapping(value = Constant.API_PREFIX_URI + "/user")
 @Api(tags = "用户管理")
 public class UserController {
 
   @Autowired
-  private UserService userService;
+  private UserRepository userRepository;
 
 
   @ApiOperation(value = "分页获取集群列表")
@@ -43,37 +36,37 @@ public class UserController {
       @RequestParam(value = "curPage", required = false, defaultValue = "1") Integer curPage,
       @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize
   ) {
-    Page<UserEntity> page = userService.page(new Page<>(curPage, pageSize));
+    Page<User> page = userRepository.page(new Page<>(curPage, pageSize));
     return new DataResult<>(new CustomPage(page));
   }
 
   @ApiOperation(value = "添加用户")
   @PostMapping(value = "/")
-  public RestResult add( @RequestBody UserEntity userEntity) {
-    if(userService.save(userEntity)){
-      return  RestResult.getSuccess();
-    }else{
-      return  RestResult.getFailed();
+  public RestResult add(@RequestBody User user) {
+    if (userRepository.save(user)) {
+      return RestResult.getSuccess();
+    } else {
+      return RestResult.getFailed();
     }
   }
 
   @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name, @RequestParam(value = "id", required = true) long id) {
-    if (userService.removeById(id)) {
+  public RestResult delete(@PathVariable("name") String name,
+      @RequestParam(value = "id", required = true) long id) {
+    if (userRepository.removeById(id)) {
       return RestResult.getSuccess();
-    }else {
+    } else {
       return RestResult.getFailed();
     }
   }
 
   @PostMapping(value = "/update")
-  public RestResult update(@RequestBody UserEntity userEntity) {
-    if (userService.updateById(userEntity)){
+  public RestResult update(@RequestBody User user) {
+    if (userRepository.updateById(user)) {
       return RestResult.getSuccess();
     }
     return RestResult.getFailed();
   }
-
 
 
 }
