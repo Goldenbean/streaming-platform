@@ -8,6 +8,7 @@ import raptor.streaming.dao.mapper.SourceMapper;
 
 
 @Repository
-public class SourceRepository extends ServiceImpl<SourceMapper, Source> implements IService<Source> {
+public class SourceRepository extends ServiceImpl<SourceMapper, Source> implements
+    IService<Source> {
 
 }
