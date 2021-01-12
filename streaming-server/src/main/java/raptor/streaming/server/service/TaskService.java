@@ -34,7 +34,6 @@ public class TaskService {
 
   public Job addOrUpdate(String clusterName, Job job) {
 
-//    JobPO jobPO = new JobPO();
 
     Task task = new Task();
 
@@ -43,6 +42,9 @@ public class TaskService {
     }
 
     task.setConfig(BootUtil.toJson(job));
+
+    task.setYarnId(job.getYarnId());
+    task.setDeployId(job.getDeployId());
 
     if (job.getId() > 0) {
       if (get(job.getId()) != null) {
