@@ -128,6 +128,15 @@ public class TaskController {
     }
   }
 
+  @DeleteMapping(value = "/delete")
+  public RestResult delete(@RequestParam(value = "id", required = true) long id) {
+    if (taskRepository.removeById(id)) {
+      return RestResult.getSuccess();
+    } else {
+      return RestResult.getFailed();
+    }
+  }
+
 
   @ApiOperation(value = "发布任务")
   @GetMapping(value = "/publish")
@@ -174,16 +183,6 @@ public class TaskController {
     final Task task = new Task();
     task.setConfig(config);
     if (taskRepository.save(task)) {
-      return RestResult.getSuccess();
-    } else {
-      return RestResult.getFailed();
-    }
-  }
-
-  @DeleteMapping(value = "/{name}/")
-  public RestResult delete(@PathVariable("name") String name,
-      @RequestParam(value = "id", required = true) long id) {
-    if (taskRepository.removeById(id)) {
       return RestResult.getSuccess();
     } else {
       return RestResult.getFailed();

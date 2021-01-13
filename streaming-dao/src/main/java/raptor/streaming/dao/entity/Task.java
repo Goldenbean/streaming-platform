@@ -13,13 +13,34 @@ import java.io.Serializable;
  * </p>
  *
  * @author azhe
- * @since 2021-01-07
+ * @since 2021-01-13
  */
 @TableName("ops_task")
 @ApiModel(value = "Task对象", description = "任务列表")
 public class Task extends BaseEntity<Task> {
 
   private static final long serialVersionUID = 1L;
+
+  @ApiModelProperty(value = "1 ready to deploy, 0 ready to stop")
+  @TableField("action")
+  private Integer action;
+
+  @ApiModelProperty(value = "是否逻辑删除，0 否 1 是")
+  @TableField("deleted")
+  @TableLogic
+  private Integer deleted;
+
+  @ApiModelProperty(value = "启动相关的配置文件")
+  @TableField("config")
+  private String config;
+
+  @ApiModelProperty(value = "运行时相关信息")
+  @TableField("info")
+  private String info;
+
+  @ApiModelProperty(value = "状态")
+  @TableField("state")
+  private String state;
 
   @TableField("job_id")
   private Long jobId;
@@ -33,22 +54,52 @@ public class Task extends BaseEntity<Task> {
   @TableField("deploy_id")
   private String deployId;
 
-  @ApiModelProperty(value = "1 ready to deploy, 0 ready to stop")
-  @TableField("action")
-  private Integer action;
+  @TableField("job_type")
+  private String jobType;
 
-  @ApiModelProperty(value = "启动相关的配置文件")
-  @TableField("config")
-  private String config;
+  @TableField("job_name")
+  private String jobName;
 
-  @TableField("info")
-  private String info;
 
-  @ApiModelProperty(value = "是否逻辑删除，0 否 1 是")
-  @TableField("deleted")
-  @TableLogic
-  private Integer deleted;
+  public Integer getAction() {
+    return action;
+  }
 
+  public void setAction(Integer action) {
+    this.action = action;
+  }
+
+  public Integer getDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Integer deleted) {
+    this.deleted = deleted;
+  }
+
+  public String getConfig() {
+    return config;
+  }
+
+  public void setConfig(String config) {
+    this.config = config;
+  }
+
+  public String getInfo() {
+    return info;
+  }
+
+  public void setInfo(String info) {
+    this.info = info;
+  }
+
+  public String getState() {
+    return state;
+  }
+
+  public void setState(String state) {
+    this.state = state;
+  }
 
   public Long getJobId() {
     return jobId;
@@ -82,36 +133,20 @@ public class Task extends BaseEntity<Task> {
     this.deployId = deployId;
   }
 
-  public Integer getAction() {
-    return action;
+  public String getJobType() {
+    return jobType;
   }
 
-  public void setAction(Integer action) {
-    this.action = action;
+  public void setJobType(String jobType) {
+    this.jobType = jobType;
   }
 
-  public String getConfig() {
-    return config;
+  public String getJobName() {
+    return jobName;
   }
 
-  public void setConfig(String config) {
-    this.config = config;
-  }
-
-  public String getInfo() {
-    return info;
-  }
-
-  public void setInfo(String info) {
-    this.info = info;
-  }
-
-  public Integer getDeleted() {
-    return deleted;
-  }
-
-  public void setDeleted(Integer deleted) {
-    this.deleted = deleted;
+  public void setJobName(String jobName) {
+    this.jobName = jobName;
   }
 
   @Override
@@ -122,14 +157,17 @@ public class Task extends BaseEntity<Task> {
   @Override
   public String toString() {
     return "Task{" +
-        "jobId=" + jobId +
+        "action=" + action +
+        ", deleted=" + deleted +
+        ", config=" + config +
+        ", info=" + info +
+        ", state=" + state +
+        ", jobId=" + jobId +
         ", yarnId=" + yarnId +
         ", flinkId=" + flinkId +
         ", deployId=" + deployId +
-        ", action=" + action +
-        ", config=" + config +
-        ", info=" + info +
-        ", deleted=" + deleted +
+        ", jobType=" + jobType +
+        ", jobName=" + jobName +
         "}";
   }
 }

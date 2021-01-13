@@ -5,31 +5,33 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="raptor.streaming.dao.entity.Task">
         <result column="id" property="id" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modify" property="gmtModify" />
         <result column="remark" property="remark" />
         <result column="creator" property="creator" />
         <result column="modifier" property="modifier" />
-        <result column="gmt_create" property="gmtCreate" />
-        <result column="gmt_modify" property="gmtModify" />
+        <result column="action" property="action" />
+        <result column="deleted" property="deleted" />
+        <result column="config" property="config" />
+        <result column="info" property="info" />
+        <result column="state" property="state" />
         <result column="job_id" property="jobId" />
         <result column="yarn_id" property="yarnId" />
         <result column="flink_id" property="flinkId" />
         <result column="deploy_id" property="deployId" />
-        <result column="action" property="action" />
-        <result column="config" property="config" />
-        <result column="info" property="info" />
-        <result column="deleted" property="deleted" />
-        <result column="creater" property="creater" />
+        <result column="job_type" property="jobType" />
+        <result column="job_name" property="jobName" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id,
+        gmt_create,
+        gmt_modify,
         remark,
         creator,
         modifier,
-        gmt_create,
-        gmt_modify,
-        job_id, yarn_id, flink_id, deploy_id, action, config, info, deleted, creater
+        action, deleted, config, info, state, job_id, yarn_id, flink_id, deploy_id, job_type, job_name
     </sql>
 
 </mapper>
