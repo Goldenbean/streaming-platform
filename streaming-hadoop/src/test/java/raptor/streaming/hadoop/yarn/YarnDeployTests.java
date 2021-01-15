@@ -53,22 +53,22 @@ public class YarnDeployTests {
     //System.out.println("HADOOP_HOME: " + System.getenv("HADOOP_HOME"));
     //System.setProperty("HADOOP_CONF_DIR", "/tmp/flink-1.11/hadoop/conf");
 
-    Configuration flinkConfiguration = YarnDeploy.load(DIST_ROOT + "/flink-1.11-SNAPSHOT/conf");
-    flinkConfiguration.setString(ConfigConstants.PATH_HADOOP_CONFIG, DIST_ROOT + "/hadoop");
+    Configuration flinkConfiguration = YarnDeploy.load("/Users/azhe/stream/streaming-platform/config/hadoop-dev","flink-dev","hdfs://stream-hdfs/streaming-platform/flink-cluster/engines/flink-hadoop-dev/system");
+    flinkConfiguration.setString(ConfigConstants.PATH_HADOOP_CONFIG, "/Users/azhe/stream/streaming-platform/config/hadoop-dev");
 
-    List<String> jars = Arrays
-        .asList("flink-dist_2.12-1.11-SNAPSHOT.jar", "kafka-clients-1.1.1.jar");
+    List<String> userClassPaths = Arrays
+        .asList("/Users/azhe/stream/streaming-platform/engines/flink-1.12.0/flink-dist_2.12-1.12.0.jar", "/Users/azhe/stream/streaming-platform/engines/flink-1.11.2/system/kafka-clients-2.4.1.jar");
 
-    List<String> userClassPaths = jars.stream()
-        .map(input -> lib + input)
-        .collect(Collectors.toList());
+//    List<String> userClassPaths = jars.stream()
+//        .map(input -> lib + input)
+//        .collect(Collectors.toList());
 
     String uuid = UUID.randomUUID().toString();
     List<String> args = Arrays.asList("--uuid", uuid,
         "--group", "flink-demo-" + uuid);
 
     PackagedProgram packagedProgram = YarnDeploy.buildPackagedProgram(
-        "../flink-11-mirror/target/flink-app-11-mirror-1.0.0-SNAPSHOT.jar",
+        "/Users/azhe/Documents/流平台/jars/app/flink-app-mirror-1.0.0-1.12.jar",
         flinkConfiguration, userClassPaths, args, null);
 
     JobGraph jobGraph = YarnDeploy.buildJobGraph(packagedProgram,
@@ -92,7 +92,7 @@ public class YarnDeployTests {
 
     ClusterDescriptor<ApplicationId> clusterDescriptor = YarnDeploy
         .createClusterDescriptor(flinkConfiguration,
-            YarnDeploy.initConfiguration(clusterConfigDirPath));
+            YarnDeploy.initConfiguration("/Users/azhe/stream/streaming-platform/config/hadoop-dev"));
 
     YarnClusterClientFactory yarnClusterClientFactory = new YarnClusterClientFactory();
     ClusterSpecification clusterSpecification = yarnClusterClientFactory
@@ -106,7 +106,7 @@ public class YarnDeployTests {
             PluginUtils.createPluginManagerFromRootFolder(flinkConfiguration));
 
     Path flinkPath = new Path(
-        "hdfs://streaming-cluster/streaming-platform/flink/engines/flink-1.11/lib");
+        "hdfs://stream-hdfs/streaming-platform/flink-cluster/engines/flink-hadoop/system");
     FileSystem fs = flinkPath.getFileSystem();
     System.out.println(fs.isDistributedFS());
 
