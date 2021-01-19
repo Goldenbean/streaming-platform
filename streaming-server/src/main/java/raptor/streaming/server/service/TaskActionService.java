@@ -127,7 +127,7 @@ public class TaskActionService {
           hadoopConfigPath);
 
       ClusterClientProvider<ApplicationId> ret =
-          applicationDeploy.deploy(applicationName, jarPath, args, spu, engineDirs);
+          applicationDeploy.deploy(applicationName, jarPath, args, spu, engineDirs,config.getEntryPointClass());
 
       String appId = ret.getClusterClient().getClusterId().toString();
 

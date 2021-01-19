@@ -42,12 +42,12 @@ public class ApplicationDeploy {
       throws ProgramInvocationException, IOException, ClusterDeploymentException {
 
     return deploy(deployConfig.getApplicationName(), deployConfig.getJarFilePath(), deployConfig
-        .getProgramArgs(), 4,"engines/flink-1.11.2");
+        .getProgramArgs(), 4,"engines/flink-1.11.2",deployConfig.getEntryPointClass());
 
   }
 
   public ClusterClientProvider<ApplicationId> deploy(String applicationName,
-      String jarPath, List<String> args, int spu,String engineDirs)
+      String jarPath, List<String> args, int spu,String engineDirs,String entryClass)
       throws ProgramInvocationException, IOException, ClusterDeploymentException {
 
     // Configuration flinkConfiguration = YarnDeploy.load(DIST_ROOT + "/conf");
@@ -80,7 +80,7 @@ public class ApplicationDeploy {
 //        );
 
     final ApplicationConfiguration applicationConfiguration =
-        new ApplicationConfiguration(toArray(args), "");
+        new ApplicationConfiguration(toArray(args),entryClass);
 
     flinkConfiguration.set(DeploymentOptions.TARGET, "yarn-application");
 
