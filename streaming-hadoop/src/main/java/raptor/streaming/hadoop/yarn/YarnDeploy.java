@@ -67,10 +67,11 @@ public class YarnDeploy {
   }
 
   public static Configuration load(String configurationDir) {
-    return load(configurationDir, "","engines/flink-1.11.2");
+    return load(configurationDir, "", "engines/flink-1.11.2");
   }
 
-  public static Configuration load(String configurationDir, String applicationName,String engineDirs) {
+  public static Configuration load(String configurationDir, String applicationName,
+      String providedLibDirs) {
 
     logger.info("{}", configurationDir);
 
@@ -78,19 +79,19 @@ public class YarnDeploy {
     YarnLogConfigUtil.setLogConfigFileInConfig(configuration, configurationDir);
 
     configuration.setString(YarnConfigOptions.APPLICATION_NAME, applicationName);
-//    flinkConfiguration.setString(YarnConfigOptions.APPLICATION_QUEUE, "");
-//    flinkConfiguration.setString(YarnConfigOptions.APPLICATION_TYPE, "");
-//    flinkConfiguration.setString(YarnConfigOptions.NODE_LABEL, "");
+    //    flinkConfiguration.setString(YarnConfigOptions.APPLICATION_QUEUE, "");
+    //    flinkConfiguration.setString(YarnConfigOptions.APPLICATION_TYPE, "");
+    //    flinkConfiguration.setString(YarnConfigOptions.NODE_LABEL, "");
 
     final ArrayList<String> strings = new ArrayList<>();
-    configuration.setString("",strings.toString());
+    configuration.setString("", strings.toString());
     // -yD yarn.provided.lib.dirs="hdfs://streaming-cluster/streaming-platform/flink/engines/flink-1.11/lib"
-//    configuration.setString("yarn.provided.lib.dirs", engineDirs);
+    // configuration.setString("yarn.provided.lib.dirs", engineDirs);
 
-    ConfigUtils.encodeArrayToConfig(configuration, YarnConfigOptions.PROVIDED_LIB_DIRS, engineDirs.split(" "), Object::toString);
+    ConfigUtils.encodeArrayToConfig(configuration, YarnConfigOptions.PROVIDED_LIB_DIRS,
+        providedLibDirs.split(" "), Object::toString);
 
-
-//    "hdfs://streaming-cluster/streaming-platform/flink/engines/flink-1.11");
+    //  "hdfs://streaming-cluster/streaming-platform/flink/engines/flink-1.11");
 
     return configuration;
   }
@@ -138,8 +139,8 @@ public class YarnDeploy {
   }
 
   public static JobGraph buildJobGraph(PackagedProgram packagedProgram,
-      Configuration configuration,
-      int defaultParallelism) throws ProgramInvocationException {
+      Configuration configuration, int defaultParallelism)
+      throws ProgramInvocationException {
 
     JobGraph jobGraph = PackagedProgramUtils.createJobGraph(packagedProgram,
         configuration, defaultParallelism, false);

@@ -42,16 +42,16 @@ public class ApplicationDeploy {
       throws ProgramInvocationException, IOException, ClusterDeploymentException {
 
     return deploy(deployConfig.getApplicationName(), deployConfig.getJarFilePath(), deployConfig
-        .getProgramArgs(), 4,"engines/flink-1.11.2",deployConfig.getEntryPointClass());
+        .getProgramArgs(), 4, "engines/flink-1.11.2", deployConfig.getEntryPointClass());
 
   }
 
   public ClusterClientProvider<ApplicationId> deploy(String applicationName,
-      String jarPath, List<String> args, int spu,String engineDirs,String entryClass)
+      String jarPath, List<String> args, int spu, String engineDirs, String entryClass)
       throws ProgramInvocationException, IOException, ClusterDeploymentException {
 
     // Configuration flinkConfiguration = YarnDeploy.load(DIST_ROOT + "/conf");
-    Configuration flinkConfiguration = YarnDeploy.load(flinkConfPath, applicationName,engineDirs);
+    Configuration flinkConfiguration = YarnDeploy.load(flinkConfPath, applicationName, engineDirs);
 
     flinkConfiguration.setInteger("parallelism.default", spu * 4);
     flinkConfiguration.setString(ConfigConstants.PATH_HADOOP_CONFIG, hadoopConfPath);
@@ -80,7 +80,7 @@ public class ApplicationDeploy {
 //        );
 
     final ApplicationConfiguration applicationConfiguration =
-        new ApplicationConfiguration(toArray(args),entryClass);
+        new ApplicationConfiguration(toArray(args), entryClass);
 
     flinkConfiguration.set(DeploymentOptions.TARGET, "yarn-application");
 

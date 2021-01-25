@@ -2,7 +2,6 @@ package raptor.streaming.hadoop.yarn;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.flink.runtime.jobgraph.SavepointRestoreSettings;
 
@@ -28,7 +27,7 @@ public class DeployConfig {
 
   private int spu = 1;
 
-  private String clusterName="";
+  private String clusterName = "";
 
   public DeployConfig() {
 
