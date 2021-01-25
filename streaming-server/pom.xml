@@ -12,7 +12,6 @@
 
   <artifactId>streaming-server</artifactId>
 
-
   <!--  <parent>-->
   <!--    <groupId>org.springframework.boot</groupId>-->
   <!--    <artifactId>spring-boot-starter-parent</artifactId>-->
@@ -49,19 +48,14 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-core</artifactId>
-<!--      <version>1.11-SNAPSHOT</version>-->
-      <version>${flink.version}</version>
-
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-runtime_${scala.binary.version}</artifactId>
-      <version>${flink.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-clients_${scala.binary.version}</artifactId>
-      <version>${flink.version}</version>
     </dependency>
 
     <dependency>
